@@ -1,5 +1,7 @@
+//  This file is served via token-parsing middleware to swap out the tokens below
+
 // global onAuthSuccess()
-// NOTE: This file is served via token-parsing middleware to handle the below config vars
+
 var GopherUtility = function() {
 	var oauthCallbackPath = 'gopher_authorized';
 	var baseUrl = '{{ baseUrl }}';
