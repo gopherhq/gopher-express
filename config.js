@@ -1,3 +1,10 @@
+// STAGING
+// const	extensionUrl = 'https://gopher-express.glitch.me/';
+// const clientId = 'ext_a289678a8cf03f25773cd8f49eb336a8';
+// const clientSecret = '67c576d81be15cb1cbef1e4bf7bfd21a065d95e171d1ac5a0a52e6c1654dd618';
+// const apiHost = 'http://staging1.www.gopher.email/';
+
+// PROD
 const	extensionUrl = 'https://gopher-express.glitch.me/';
 const clientId = 'ext_9f60fb6e24bbe5d5b27100636b0c84fb';
 const clientSecret = '38032774a8c03581a70b560daef721c896a56e5942e0686cc46ac5cc1e14a1fd';
