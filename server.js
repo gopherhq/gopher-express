@@ -17,12 +17,14 @@ const gopherAuth = require('./routes/gopherAuth');
 // gopher js with config options augomagically included
 app.use('/gopher.js', gopherUtils.jsTokenizer); 
 
+
 // hooking it all up
 app.use('/webhooks', webhooks);
-app.use(gopherUtils.authMiddleware); //reques auth from here down
 app.use('/auth', gopherAuth);
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+// app.use(gopherUtils.requireLogin); //reques auth from here down
+
+app.get('/', gopherUtils.requireLogin, (req, res) => {
+  res.sendFile(__dirname + '/public/settings.html');
 });
 
 

@@ -1,30 +1,28 @@
-function onAuthSuccess() {
-	// Things you can do after user finishes authenticating
-	// $('#setup-complete').removeClass('hide');
-	// $('#command-settings').hide();
-}
+var Cookies = window.Cookies;
 
-gopherLogIn(function(gopher) {
+$(function() {
+  
+  //populate settings
+  fetchSettings(function(err, settings) {
+    console.log('Gopher Settings: ', settings);
+    if(err || !settings) {
+      console.log(err);
+      Cookies.remove('gopherToken');
+      return displayError("Sorry, Gopher had trouble logging in. Please refresh the page to login again.");
+    }
+        
+    $('.settings-form').removeClass('hide');
+    populateSettingsForm('.settings-form', '.fut-setting', settings);
+  });
+  
+  //  if they now just logged in
+  if (getUrlParameter('welcome')) {
+   displaySuccess('This Gopher Extension has been installed on your account and is ready for use');
+  }
 
-	gopher.fetchSettings(function(err, settings) {
-		console.log(settings);
-		if(err) {
-			console.log(err);
-			Cookies.remove('gopherToken');
-			return gopher.displayError("Sorry, Gopher had trouble logging in. Please refresh the page to login again.");
-		}
-		if(!settings || (settings.gopherToken === 'undefined')) { //if the fut_auth_token has been removed on the server, remove from client.
-			Cookies.remove('gopherToken');
-			return location.reload();
-		}
-		$('#command-settings').removeClass('hide');		
-		gopher.populateSettingsForm('.settings-form', '.fut-setting', settings);
-		$('#memorize-settings').removeClass('hide');
-		
-	})
-
+  // handle form submission
 	$('.settings-form').submit(function() {
-		gopher.submitSettingsForm(this, '.fut-setting');
+		submitSettingsForm(this, '.fut-setting');
 		return false;
 	});
 

@@ -1,219 +1,138 @@
 //  This file is served via token-parsing middleware to swap out the tokens below
 
-// global onAuthSuccess()
-
-var GopherUtility = function() {
-	var oauthCallbackPath = 'gopher_authorized';
-	var baseUrl = '{{ baseUrl }}';
-	var redirectUri = '{{ redirectUri }}';
-	var api = {}
-
-	function isAuthorizing() {
-		if (window.location.href.indexOf(oauthCallbackPath) === -1) {
-			return false;
-		}
-		return true;
-	}
-
-	function logIn(cb) {
-		if (checkLoginCookie()) {
-			// If you're successfully logged in but still have a bunch of crap in the query string, fix it.
-			if (isAuthorizing())
-				window.location.assign(window.location.origin);
-			api.loggedIn = true;
-			cb();
-		// We're currently getting an oauth token
-		} else if (isAuthorizing()) {
-			completeAuthorization(function(isLoggedIn) {
-				api.loggedIn = isLoggedIn;
-				if (isLoggedIn)
-					cb();
-			});
-		} else {
-			initiateGopherConnection();
-		}
-	}
-
-	function displayError(err) {
-		$('#error').removeClass('hide').append("<p>Error: " + err + "</p>");
-		console.log(err);
-	}
-
-	function displaySuccess(message) {
-		$('#success').removeClass('hide').append(message);
-	}
-
-	function completeAuthorization(cb) {
-		var code = getUrlParameter("code");
-		var state = getUrlParameter("state");
-		// if(Cookies.get('state') != state) {
-		//     $('#error').removeClass('hide').append("<p>There was an authentication error. Please make sure your browser can accept cookies</p>");
-		// }
-
-		var getAuthTokenRequest = {
-			url: baseUrl + 'gopherCallback?code=' + code,
-			type: 'GET',
-			dataType: 'json',
-			contentType: 'application/json; charset=utf-8',
-			crossDomain: true,
-			beforeSend: function() { NProgress.start();},
-		};
-
-		$.ajax(getAuthTokenRequest)
-		.done(function (res) {
-			displaySuccess("Successfully authorized the Gopher Reminder Service.");
-			Cookies.set('fut_access_token', res.gopherAccessToken);
-			console.log('access token', res.gopherAccessToken);
-			onAuthSuccess(); //global
-			console.log(res);
-			NProgress.done();
-			cb(true);
-		}).fail(function (err) {
-			displayError(err.responseText);
-			NProgress.done();
-			cb(false);
-		});
-	}
-
-	function checkLoginCookie() {
-		return Cookies.get('fut_access_token') ? true : false;
-	}
-
-	function initiateGopherConnection() {
-		var connectGopherRequest = {
-			url: baseUrl + 'auth/connectGopher',
-			type: 'GET',
-			dataType: 'json',
-			contentType: 'application/json; charset=utf-8',
-			crossDomain: true,
-			beforeSend: function() { NProgress.start();}
-		};
-
-		$.ajax(connectGopherRequest)
-		.done(function (res) {
-			window.location.assign(res.authUri);
-			NProgress.done();
-		}).fail(function (err) {
-			displayError("There was an error connecting to Gopher: " + err.responseText);
-			NProgress.done();
-		});
-	}
-
-	function fetchSettings(cb) {
-		var getSettings = {
-			url: baseUrl + 'getSettings',
-			type: 'GET',
-			dataType: 'json',
-			contentType: 'application/json; charset=utf-8',
-			crossDomain: true,
-			beforeSend: function() { NProgress.start(); },
-		};
-		$.ajax(getSettings)
-		.done(function(res) {
-			NProgress.done();
-			cb(null, res.data);
-		}).fail(function(err) {
-			NProgress.done();
-			cb(err, null);
-		});
-
-	}
-
-	function populateSettingsForm(formElement, formItemSelector, settings) {
-		var form = $(formElement);
-
-		if (!settings) return;
-
-		_.forEach(form.find(formItemSelector), function (settingsField) {
-			switch (settingsField.type) {
-				case 'checkbox':
-					settingsField.checked = (settings[settingsField.id] == true);
-					break;
-				case 'radio':
-					if (settingsField.value === settings[settingsField.name]) {
-						settingsField.checked = true;
-					}
-					break;
-				default:
-					settingsField.value = settings[settingsField.id] || '';
-			}
-		});
-	}
-
-	function submitSettingsForm(formElement, formItemSelector) {
-		var formData = {};
-
-		_.forEach($(formElement).find(formItemSelector), function (settingsField) {
-			switch (settingsField.type) {
-				case 'checkbox':
-					formData[settingsField.id] = settingsField.checked ? 1 : 0;
-					break;
-				case 'radio':
-					if (settingsField.checked) formData[settingsField.name] = settingsField.value;
-					break;
-				default:
-					formData[settingsField.id] = settingsField.value;
-			}
-		});
-
-		saveSettings(formData);
-	}
-
-	function saveSettings(settings, cb) {
-		NProgress.start();
-
-		var postOptions = {
-			url: baseUrl + 'saveSettings',
-			type: 'POST',
-			data: JSON.stringify(settings),
-			dataType: 'json',
-			processData : false,
-			contentType: 'application/json; charset=utf-8',
-			crossDomain: true,
-			beforeSend: function() { NProgress.start();},
-		};
-
-		$.ajax(postOptions)
-		.then(function (res) {
-			NProgress.done();
-			if (!_.isNil(cb)) cb(null);
-		}).catch(function (err) {
-			displayError('<p>Sorry, there was an error saving your options. Please try <a class="alert-link" href="/connectGopher">logging in again</a>. If this continues to be a problem please <a class="alert-link" href="http://help.followupthen.com/contact">contact us</a>.</p> (' + err.responseText + ')')
-			NProgress.done();
-			if (!_.isNil(cb)) cb(err);
-		});
-	}
-
-	//https://stackoverflow.com/questions/19491336/get-url-parameter-jquery-or-how-to-get-query-string-values-in-js
-	function getUrlParameter(sParam) {
-		 var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-			 sURLVariables = sPageURL.split('&'),
-			 sParameterName,
-			 i;
-
-		 for (i = 0; i<sURLVariables.length; i++) {
-			 sParameterName = sURLVariables[i].split('=');
-			 if (sParameterName[0] === sParam) {
-				 return sParameterName[1] === undefined ? true : sParameterName[1];
-			 }
-		 }
-	};
-
-	api.baseUrl = baseUrl;
-	api.displayError = displayError;
-	api.displaySuccess = displaySuccess;
-	api.gopherAccessToken = Cookies.get('fut_access_token');
-	api.fetchSettings = fetchSettings;
-	api.populateSettingsForm = populateSettingsForm;
-	api.saveSettings = saveSettings;
-	api.submitSettingsForm = submitSettingsForm;
-	api.logIn = logIn;
-	return api;
+// Globals
+var Cookies  = window.Cookies;
+var _ = window._;
+var NProgress = window.NProgress;
+var baseUrl = '{{ baseUrl }}';
+  
+function displayError(err) {
+  $('#error').removeClass('hide').append("<p>Error: " + err + "</p>");
+  console.log(err);
 }
 
-var gopherLogIn = function(cb) {
-	var gopher = new GopherUtility();
-	gopher.logIn(function() {
-		cb(gopher);
-	});
+function displaySuccess(message) {
+  $('#success').removeClass('hide').append(message);
+}
+
+function getLoginCookie() {
+  return Cookies.get('gopherToken') ? true : false;
+}
+
+function fetchSettings(cb) {
+  
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://staging1.www.gopher.email/api/v1/extensions/self/users/self/data/",
+    "method": "GET",
+    "headers": {
+      "authorization": "Bearer f340423b8b82ede13e7a9b35baf32fc28b1caa56",
+      "cache-control": "no-cache",
+      "postman-token": "64c4f32e-a22a-92ca-dbf4-148c4aa7118f"
+    }
+  }
+  
+  NProgress.start();
+  $.ajax(settings).done(function (response) {
+    NProgress.done();
+    cb(null, response.data);
+
+  }).fail(function(err) {
+    NProgress.done();
+    cb(err, null)
+  });
+}
+  
+  
+function populateSettingsForm(formElement, formItemSelector, settings) {
+  var form = $(formElement);
+
+  if (!settings) return;
+
+  _.forEach(form.find(formItemSelector), function (settingsField) {
+    switch (settingsField.type) {
+      case 'checkbox':
+        settingsField.checked = (settings[settingsField.id] == true);
+        break;
+      case 'radio':
+        if (settingsField.value === settings[settingsField.name]) {
+          settingsField.checked = true;
+        }
+        break;
+      default:
+        settingsField.value = settings[settingsField.id] || '';
+    }
+  });
+}
+
+function submitSettingsForm(formElement, formItemSelector) {
+  var formData = {};
+
+  _.forEach($(formElement).find(formItemSelector), function (settingsField) {
+    switch (settingsField.type) {
+      case 'checkbox':
+        formData[settingsField.id] = settingsField.checked ? 1 : 0;
+        break;
+      case 'radio':
+        if (settingsField.checked) formData[settingsField.name] = settingsField.value;
+        break;
+      default:
+        formData[settingsField.id] = settingsField.value;
+    }
+  });
+
+  saveSettings(formData);
+}
+
+function saveSettings(settings, cb) {
+  NProgress.start();
+
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://staging1.www.gopher.email/api/v1/extensions/self/users/self/data/",
+    "method": "POST",
+    "headers": {
+      "authorization": "Bearer f340423b8b82ede13e7a9b35baf32fc28b1caa56",
+      "content-type": "application/json",
+      "cache-control": "no-cache",
+      "postman-token": "443bd189-9a78-7e47-2b36-5385e2f154b8"
+    },
+    "processData": false,
+    "data": JSON.stringify(settings)
+  }
+  
+  NProgress.start();
+  $.ajax(settings).done(function (response) {
+      NProgress.done();
+      displaySuccess('Settings saved!');
+      if(cb) cb(null, response);
+  }).catch(function (err) {
+      NProgress.done();
+      displayError('<p>Sorry, there was an error saving your options. Please try <a class="alert-link" href="/connectGopher">logging in again</a>. If this continues to be a problem please <a class="alert-link" href="http://help.followupthen.com/contact">contact us</a>.</p> (' + err.responseText + ')')
+      if(cb) cb(err.responseText);
+  });
+  
+}
+
+//https://stackoverflow.com/questions/19491336/get-url-parameter-jquery-or-how-to-get-query-string-values-in-js
+function getUrlParameter(sParam) {
+   var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+     sURLVariables = sPageURL.split('&'),
+     sParameterName,
+     i;
+
+   for (i = 0; i<sURLVariables.length; i++) {
+     sParameterName = sURLVariables[i].split('=');
+     if (sParameterName[0] === sParam) {
+       return sParameterName[1] === undefined ? true : sParameterName[1];
+     }
+   }
+}
+
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
 }

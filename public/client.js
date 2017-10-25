@@ -18,7 +18,7 @@ $(function() {
   }
   
   // must be logged in to be on settings
-  if ( document.location.href.indexOf('settings') === '-1' &&  !getCookie('fut_token')) {
+  if ( document.location.href.indexOf('settings') === '-1' &&  !getCookie('gopherToken')) {
      document.location.href = "/auth";
   }
   
