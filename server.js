@@ -2,6 +2,11 @@ const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+app.use(bodyParser.json({
+  verify: function(req, res, buf, encoding) {
+    req.rawBody = buf.toString();
+  }
+}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static('public'));
@@ -19,7 +24,7 @@ app.use('/gopher.js', gopherUtils.jsTokenizer);
 
 
 // hooking it all up
-app.use('/webhooks', webhooks);
+app.use('/', webhooks);
 app.use('/auth', gopherAuth);
 // app.use(gopherUtils.requireLogin); //reques auth from here down
 

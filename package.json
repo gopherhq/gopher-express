@@ -22,7 +22,10 @@
     "body-parser": "^1.18.2",
     "unix-timestamp": "^0.2.0",
     "fut-node": "git+https://github.com/rsweetland/fut-node.git#0.2",
-    "ejs": "^2.5.7"
+    "ejs": "^2.5.7",
+    "raw-body": "^2.3.2",
+    "content-type": "^1.0.4",
+    "lodash": "^4.17.4"
   },
   "engines": {
     "node": "6.9.1"
