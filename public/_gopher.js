@@ -24,10 +24,10 @@ function fetchSettings(cb) {
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://staging1.www.gopher.email/api/v1/extensions/self/users/self/data/",
+    "url": baseUrl + "api/v1/extensions/self/users/self/data/",
     "method": "GET",
     "headers": {
-      "authorization": "Bearer f340423b8b82ede13e7a9b35baf32fc28b1caa56",
+      "authorization": "Bearer " + Cookies.get('gopherToken'),
       "cache-control": "no-cache",
       "postman-token": "64c4f32e-a22a-92ca-dbf4-148c4aa7118f"
     }
@@ -91,10 +91,10 @@ function saveSettings(settings, cb) {
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://staging1.www.gopher.email/api/v1/extensions/self/users/self/data/",
+    "url": baseUrl + "api/v1/extensions/self/users/self/data/",
     "method": "POST",
     "headers": {
-      "authorization": "Bearer f340423b8b82ede13e7a9b35baf32fc28b1caa56",
+      "authorization": "Bearer " + Cookies.get('gopherToken'),
       "content-type": "application/json",
       "cache-control": "no-cache",
       "postman-token": "443bd189-9a78-7e47-2b36-5385e2f154b8"

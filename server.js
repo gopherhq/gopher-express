@@ -24,6 +24,7 @@ app.use('/gopher.js', gopherUtils.jsTokenizer);
 
 // hooking it all up
 app.use('/auth', gopherAuth);
+
 app.get('/', gopherUtils.requireLogin, (req, res) => {
   res.sendFile(__dirname + '/public/settings.html');
 });

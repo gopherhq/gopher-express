@@ -21,42 +21,17 @@ router.post('/onCommand', function(request, response) {
   console.log('onCommand hit');
   response.send(
     {
-      "something_incorrect": "here",
-      "version": 1, // required (specifies which version of Gopher JSON parser to use)
-      "task": {
-        "reminder_time": 123456890,   // unix timestamp of reminder due date
-        "reminder_timeformat": "1sec", // natural language reminder date (can be recurring)
-        "reference_email": { // a changable version of the original email command
-          "command_format": "me.1day@remind.gopher.email", 
-          "method": "", // to|cc|bcc|fwd
-          "to": [],
-          "cc": [],
-          "bcc": [],
-          "from": "",
-          "subject": "",
-          "html": "",
-        },
-        "private_data": {
-        "contact_id": "12345" // store information accessible to only this task (will be sent on every future webhook for this task)
-        }
-      },
-      "extension": {
-        "private_data": {
-          "api_key": "20939uaua93a30" // store information accessible to all tasks with this extension (will be sent on every future webhook for for all tasks with this extension)
-          }
-      },
-      "responses": [ // send outbound messages (only emails for now)
+      "version": 1,
+      "response": [
         {
           "type": "email",
-          "to": "email@email.com",
-          "cc": "email@email.com, email1@email.com",
-          "bcc": "email@email.com, email1@email.com",
+          "to": "esweetland@gmail.com",
           "from": "Sender Name",
           "subject": "Some custom subject",
           "reply-to": {"action":"arbitrary.data.string"}, // this reply is an email-action, allowing for a dialog with your application, it can also be just an email address
-          "soft-error": "Please connect Evernote to make this extension work", //You can also use this tell a user to set up a plugin if one has not yet been set up yet. 
+          "soft-error": "This is just a teststo", //You can also use this tell a user to set up a plugin if one has not yet been set up yet. 
           "body": [
-            { 
+            {
               "type": "title",
               "text": "My Great Extension"
             },
@@ -67,7 +42,11 @@ router.post('/onCommand', function(request, response) {
             },
             {
               "type": "html",
-              "text": "Include images, HTML or other items here"
+              "text": `Include images, HTML or other items here. 
+                        <p> Deflector power at maximum. Energy discharge in six seconds. Warp reactor core primary coolant failure. Fluctuate phaser resonance frequencies. Resistance is futile. Recommend we adjust shield harmonics to the upper EM band when proceeding. These appear to be some kind of power-wave-guide conduits which allow them to work collectively as they perform ship functions. Increase deflector modulation to upper frequency band.</p>
+                        <p>I have reset the sensors to scan for frequencies outside the usual range. By emitting harmonic vibrations to shatter the lattices. We will monitor and adjust the frequency of the resonators. He has this ability of instantly interpreting and extrapolating any verbal communication he hears. It may be due to the envelope over the structure, causing hydrogen-carbon helix patterns throughout. I'm comparing the molecular integrity of that bubble against our phasers.</p>
+                        <p>Sensors indicate no shuttle or other ships in this sector. According to coordinates, we have travelled 7,000 light years and are located near the system J-25. Tractor beam released, sir. Force field maintaining our hull integrity. Damage report? Sections 27, 28 and 29 on decks four, five and six destroyed. Without our shields, at this range it is probable a photon detonation could destroy the Enterprise.</p>
+                      `
             },
             {
               "type": "button",
@@ -87,10 +66,9 @@ router.post('/onCommand', function(request, response) {
             }
 
           ]
-        } // One webhook response can contain many outbound emails.
+        }
       ]
-    }
-  ); 
+    }); 
 });
 
 
