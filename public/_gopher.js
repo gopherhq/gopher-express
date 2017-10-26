@@ -5,6 +5,7 @@ var Cookies  = window.Cookies;
 var _ = window._;
 var NProgress = window.NProgress;
 var baseUrl = '{{ baseUrl }}';
+var gopherBaseUrl = 'https://www.gopher.email/';
   
 function displayError(err) {
   $('#error').removeClass('hide').append("<p>Error: " + err + "</p>");
@@ -24,7 +25,7 @@ function fetchSettings(cb) {
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": baseUrl + "api/v1/extensions/self/users/self/data/",
+    "url": gopherBaseUrl + "api/v1/extensions/self/users/self/data/",
     "method": "GET",
     "headers": {
       "authorization": "Bearer " + Cookies.get('gopherToken'),
@@ -32,7 +33,7 @@ function fetchSettings(cb) {
       "postman-token": "64c4f32e-a22a-92ca-dbf4-148c4aa7118f"
     }
   }
-  
+    
   NProgress.start();
   $.ajax(settings).done(function (response) {
     NProgress.done();
@@ -91,7 +92,7 @@ function saveSettings(settings, cb) {
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": baseUrl + "api/v1/extensions/self/users/self/data/",
+    "url": gopherBaseUrl + "api/v1/extensions/self/users/self/data/",
     "method": "POST",
     "headers": {
       "authorization": "Bearer " + Cookies.get('gopherToken'),

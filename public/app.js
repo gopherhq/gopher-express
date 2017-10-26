@@ -5,10 +5,10 @@ $(function() {
   //populate settings
   fetchSettings(function(err, settings) {
     console.log('Gopher Settings: ', settings);
-    if(err || !settings) {
-      console.log(err || settings);
-      // Cookies.remove('gopherToken');
-      // return displayError("Sorry, Gopher had trouble logging in. Please refresh the page to login again.");
+    if(err) {
+      console.log('Error fetching settings', err || settings);
+      Cookies.remove('gopherToken');
+      return displayError("Sorry, Gopher had trouble logging in. Please refresh the page to login again.");
     }
         
     $('.settings-form').removeClass('hide');

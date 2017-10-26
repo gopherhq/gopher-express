@@ -10,27 +10,19 @@ app.use(bodyParser.json({
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static('public'));
-
+const gopherAuth = require('./routes/gopherAuth');
 const gopherUtils = require('./lib/gopherUtils');
 
-// customize gopherWebhooks.js to change behavior
+// Most of your email-handling work will be here (routes/gopherWebhook)
 const webhooks = require('./routes/gopherWebhooks');
 
-//OAuth2 workflow. You shouldn't have to customize this
-const gopherAuth = require('./routes/gopherAuth');
-
-// gopher js with config options augomagically included
-app.use('/gopher.js', gopherUtils.jsTokenizer); 
-
-// hooking it all up
 app.use('/auth', gopherAuth);
-
+app.use('/gopher.js', gopherUtils.requireLogin, gopherUtils.jsTokenizer);  // automatically populated with config values
 app.get('/', gopherUtils.requireLogin, (req, res) => {
   res.sendFile(__dirname + '/public/settings.html');
 });
-
 app.use(webhooks);
 
-var listener = app.listen(process.env.PORT || 3002, function () {
+const listener = app.listen(process.env.PORT || 3002, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });

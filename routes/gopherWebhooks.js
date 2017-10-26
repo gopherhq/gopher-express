@@ -9,7 +9,6 @@ const _ = require('lodash');
 // Validates your webhook and populates the Gopher API client
 router.use(gopherUtils.validateWebhook);
 
-
 /*
 
   onCommand – Hit when an email command (ex: invite@my-cmd.gopher.email) has been received.
@@ -27,9 +26,9 @@ router.post('/onCommand', function(request, response) {
           "type": "email",
           "to": "esweetland@gmail.com",
           "from": "Sender Name",
-          "subject": "Some custom subject",
+          "subject": "A Custom Email Subject From Gopher",
           "reply-to": {"action":"arbitrary.data.string"}, // this reply is an email-action, allowing for a dialog with your application, it can also be just an email address
-          "soft-error": "This is just a teststo", //You can also use this tell a user to set up a plugin if one has not yet been set up yet. 
+          "soft-error": "This is just a test", //You can also use this tell a user to set up a plugin if one has not yet been set up yet. 
           "body": [
             {
               "type": "title",
@@ -58,7 +57,7 @@ router.post('/onCommand', function(request, response) {
               text: "Action Email: Turn off confirmations",
               action: 'notifications.off',
               subject: "Hit Send to Turn off Confirmation Emails",
-              body: "This is a Gopher email-action, a handy way of getting stuff done without ever leaving your inbox.",
+              body: "name: %0A amount: %0A tag [network, colo, hosting]: %0A probability[1-10]: %0A%0A%0A--%0AThis is a Gopher email-action, a handy way of getting stuff done without ever leaving your inbox.",
             },
             { // (Temporarily used snippet to force elements in their own section)
               type: 'html',
@@ -80,8 +79,20 @@ router.post('/onCommand', function(request, response) {
 
 
 router.post('/onTrigger', function(request, response) {
-  response.send({test: "true"})
+  response.send({
+    version: "1",
+    extension: {
+      "private_data": {
+        "triggered": "23"
+      }
+    }
+  })
   
 });
+
+router.post('/', function(reqest, response) {
+  console.log(reqest);
+  response.send({ok: true});
+})
 
 module.exports = router;

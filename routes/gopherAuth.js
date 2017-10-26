@@ -42,7 +42,7 @@ router.get('/callback', (req, res) => {
     }
     
     const tokenDetails = oauth2.accessToken.create(result);
-    console.log('The token is: ', tokenDetails.token.access_token);
+    console.log('Access token is: ', tokenDetails.token.access_token);
     return res
             .cookie('gopherToken', tokenDetails.token.access_token)
             .redirect('/?welcome=1');
