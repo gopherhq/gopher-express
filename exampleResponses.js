@@ -5,7 +5,7 @@ var app = express();
 app.post('/todoist_on_complete', (req, res) => {
   console.log('on_complete webook fired');
   let body = {
-    followup: {
+    response: [{
       'body': [
         {
           type: 'html',
@@ -28,7 +28,7 @@ app.post('/todoist_on_complete', (req, res) => {
           text: '<table border=0" style="clear: both"><tr><td><h4>NOTES</h4><p>Whatever I emailed goes here, along with additional notes I added in ToDoist. https://console.aws.com</p></td></tr></table>',
         }
       ]
-    }
+    }]
   };
   return res.json(body);
       

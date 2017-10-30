@@ -13,7 +13,6 @@
     "autotest": "export NODE_ENV=testing; supervisor -q -n exit -x mocha -- -b"
   },
   "dependencies": {
-    "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "simple-oauth2": "^1.3.0",
     "request": "^2.83.0",
@@ -23,8 +22,6 @@
     "unix-timestamp": "^0.2.0",
     "fut-node": "git+https://github.com/rsweetland/fut-node.git#0.2",
     "ejs": "^2.5.7",
-    "raw-body": "^2.3.2",
-    "content-type": "^1.0.4",
     "lodash": "^4.17.4"
   },
   "engines": {
@@ -39,8 +36,6 @@
     "express"
   ],
   "devDependencies": {
-    "nock": "^9.0.13",
-    "nodemon": "^1.11.0",
-    "supertest": "^3.0.0"
+    "nodemon": "^1.11.0"
   }
 }

@@ -7,7 +7,7 @@ const _ = require('lodash');
 
 
 // Validates your webhook and populates the Gopher API client
-router.use(gopherUtils.validateWebhook);
+// router.use(gopherUtils.validateWebhook);
 
 /*
 
@@ -18,7 +18,7 @@ router.use(gopherUtils.validateWebhook);
 
 router.post('/onCommand', function(request, response) {
   console.log('onCommand hit');
-  response.send(
+  response.json(
     {
       "version": 1,
       "response": [

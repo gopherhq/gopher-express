@@ -13,6 +13,11 @@ app.use(express.static('public'));
 const gopherAuth = require('./routes/gopherAuth');
 const gopherUtils = require('./lib/gopherUtils');
 
+app.use((req, res, next) => {
+  console.log('here');
+  next();
+})
+
 // Most of your email-handling work will be here (routes/gopherWebhook)
 const webhooks = require('./routes/gopherWebhooks');
 

@@ -5,7 +5,7 @@ var Cookies  = window.Cookies;
 var _ = window._;
 var NProgress = window.NProgress;
 var baseUrl = '{{ baseUrl }}';
-var gopherBaseUrl = 'https://www.gopher.email/';
+var gopherBaseUrl = '{{ gopherBaseUrl }}';
   
 function displayError(err) {
   $('#error').removeClass('hide').append("<p>Error: " + err + "</p>");
