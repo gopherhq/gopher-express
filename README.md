@@ -1,37 +1,31 @@
 # Gopher Express 
-If you just arrived here from the Gopher Extension page then congratulations, you have a complete Gopher Extension with an editing environment! 
+Welcome to your new [Glitch-powered](https://glitch.com/) Gopher Extension! If you arrived from the "Create Extension" Gopher page, see the "finishing setup" section. Otherwise, check out the "Creating A New Gopher Extension" page.
 
-First, try to edit a couple files. If you can't, you'll have to [remix this](https://glitch.com/edit/#!/remix/gopher-express) to create an editable copy of your own.
+## Finishing Setup
+* Find the "Base URL" of your extension by right-clicking the "show" button in the top-left. ![get the base URL](https://cdn.glitch.com/3073062a-4a90-4160-b5ba-145429e03fdb%2Fpublic-url.png?1509581506608). Add this to your extension settings.
+* Enter the "Callback URI" Gopher setting as `[base-url]/auth/callback`. (For example: `https://gopher-express.glitch.me/auth/callback`).
 
-Next we'll connect this extension to the Gopher API. 
-
-* Get the "Base URL" of your extension by right-clicking the "show" button in the top-left. ![get the base URL](https://cdn.glitch.com/3073062a-4a90-4160-b5ba-145429e03fdb%2Fpublic-url.png?1509581506608)
-* Now, [create an extension](https://www.gopheremail.com/developer/create) if you have not done so already.
-* Take the `client_id`, `client_secret` and `callback_ 
+After you've finished the setup, try logging in by clicking the sun glasses. Read our [API documentation](https://developers.gopher.email/#quickstart-glitch).
 
 
+### Creating A New Gopher Extension
+This [Gopher](https://www.gopher.email) Extension starter kit is based on [Glitch](https://glitch.com/), but uses standard Node.js tools that can be hosted anywhere.
 
-### A Gopher Extension Starter Kit
-(Alpha Release)
+To get started, [create a Gopher Extension](https://www.gopheremail.com/developer/create) from the Gopher Developer Portal .
 
-This starter kit is based on [Glitch](https://glitch.com/), a hosted platfrom to build that makes it simple to edit and publish applications.
-
-Start your Gopher Extension right in your browser by "remxing" this one. When you click "Remix This" below, it will create an editable copy Gopher Express under your account.
-
-## [Remix This](https://glitch.com/edit/#!/remix/gopher-express)
-
-Next, set up a new new Gopher Extension in the Gopher Admin UI, edit the values in configuration variables.
+You can also [remx](https://glitch.com/edit/#!/remix/gopher-express) this Gopher Extension right now and set it up with Gopher later.
 
 Read the [Glitch quickstart](https://developers.gopher.email/#quickstart-glitch) guide for more information.
 
-Note: You can save your source code and run the extension locally (or on any other provider):
- * Export to Github or Download (advanced settings)
- * In the directory, run ```npm install```, then ```npm start```
+
+## Exporting 
+Note: Gopher Express is based on the popular Node.js Express framework which means it can be hosted anywhere. To get this running locally, for example:
+ * export to Github or Download (in advanced settings)
+ * run ```npm install```, then ```npm start```
  * map a domain to localhost with [ngrok](http://ngrok.io)
- * create a new extension on gopher.email with that domain
  * copy config.example.js to config.js
+ * create a new extension on gopher.email with that domain
 
 ## Todos:
 - [ ] Run webhook middleware only within /on*/ routes (ex: onCommand)
-- [ ] More Demo email examples (copy / pastable from API docs)
-- [ ] Process State variable
+- [ ] OAuth State
