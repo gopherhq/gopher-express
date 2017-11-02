@@ -4,7 +4,6 @@
 var Cookies  = window.Cookies;
 var _ = window._;
 var NProgress = window.NProgress;
-var baseUrl = '{{ baseUrl }}';
 var gopherBaseUrl = '{{ gopherBaseUrl }}';
   
 function displayError(err) {

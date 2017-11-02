@@ -1,5 +1,5 @@
 if(!process.env.EXTENSION_URL || !process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
-  console.log('Please fill out your settings in the .env file to connect with Gopher');
+  console.log('Please fill out the settings in the .env file to connect with Gopher');
   process.exit();
 }
 
@@ -17,6 +17,5 @@ module.exports = {
   tokenHost: apiHost,
   tokenPath: apiHost + 'api/v1/oauth2/access_token',
   authorizePath: apiHost + 'settings/oauth2_authorize',
-  scope: 'get_user_info extension_manage_self manage_reminders read_reminders manage_logs read_logs read_tasks manage_tasks',
-  state: '49afjdskfdsjlk'
+  scope: 'get_user_info extension_manage_self'
 }

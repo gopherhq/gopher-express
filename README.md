@@ -25,7 +25,3 @@ Note: Gopher Express is based on the popular Node.js Express framework which mea
  * map a domain to localhost with [ngrok](http://ngrok.io)
  * copy config.example.js to config.js
  * create a new extension on gopher.email with that domain
-
-## Todos:
-- [ ] Run webhook middleware only within /on*/ routes (ex: onCommand)
-- [ ] OAuth State

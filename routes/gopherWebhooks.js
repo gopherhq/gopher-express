@@ -6,8 +6,8 @@ const gopherUtils = require('../lib/gopherUtils');
 const _ = require('lodash');
 
 
-// Validates your webhook and populates the Gopher API client
-// router.use(gopherUtils.validateWebhook);
+// Validates your webhook and populates the Gopher API client (ex: "onCommand, onAction, etc")
+router.use(/on*/, gopherUtils.validateWebhook);
 
 /*
 

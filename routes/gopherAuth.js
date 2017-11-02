@@ -16,19 +16,28 @@ const oauth2 = OAuth2.create({
   },
 });
 
+let state = Math.random().toString().substr(3,15);
+
 const authorizationUri = oauth2.authorizationCode.authorizeURL({
   redirect_uri: config.redirectUri,
   scope: config.scope,
-  state: config.state,
+  state: state
 });
 
 router.get('/login', (req, res) => {
-  res.redirect(authorizationUri);
+  res
+    .cookie('gopherState', state)
+    .redirect(authorizationUri);
 });
 
 // Callback service parsing the authorization token and asking for the access token
 router.get('/callback', (req, res) => {
   const code = req.query.code;
+  const stateCookie = req.cookies.gopherState;
+  const state = req.query.state;
+  if(stateCookie === state) {
+    return res.send("Error: You may have been redirected to a different place from where you started, or your cookies are not being saved. (State mis-match)");
+  }
   const options = {
     code: code,
     redirect_uri: config.redirectUri,
