@@ -1,4 +1,4 @@
-if(!process.env.EXTENSION_URL || !process.env.CLIENT_ID || process.env.CLIENT_SECRET) {
+if(!process.env.EXTENSION_URL || !process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
   console.log('Please fill out your settings in the .env file to connect with Gopher');
   process.exit();
 }
