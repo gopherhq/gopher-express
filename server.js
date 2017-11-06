@@ -12,6 +12,11 @@ app.use(cookieParser());
 app.use(express.static('public'));
 const gopherUtils = require('./lib/gopherUtils');
 
+app.use((req, res, next) => {
+  console.log('extension contacted');
+  next();
+});
+
 /**
  * 
  * Process and respond to webhooks in /routes/gopherWebhooks.js

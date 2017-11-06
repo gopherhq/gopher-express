@@ -1,12 +1,12 @@
 # Gopher Express 
-Welcome to your new [Glitch-powered](https://glitch.com/) Gopher Extension! If you arrived from the "Create Extension" Gopher page, see the "finishing setup" section. Otherwise, check out the "Creating A New Gopher Extension" page.
+Welcome to your new [Glitch-powered](https://glitch.com/) Gopher Extension! To finish setting up your extension.
 
-## Finishing Setup
-* Find the "Base URL" of your extension by right-clicking the "show" button in the top-left. ![get the base URL](https://cdn.glitch.com/3073062a-4a90-4160-b5ba-145429e03fdb%2Fpublic-url.png?1509581506608). Add this to your extension settings.
-* Enter the "Callback URI" Gopher setting as `[base-url]/auth/callback`. (For example: `https://gopher-express.glitch.me/auth/callback`).
+1. Copy your "Base URL" by right-clicking the "show" button in the top-left. ![get the base URL](https://cdn.glitch.com/3073062a-4a90-4160-b5ba-145429e03fdb%2Fpublic-url.png?1509581506608). Paste this in your extension settings.
+2. Enter the "Callback URI" Gopher setting as `[base-url]/auth/callback`. (For example: `https://gopher-express.glitch.me/auth/callback`).
 
-After you've finished the setup, try logging in by clicking the sun glasses. Read our [API documentation](https://developers.gopher.email/#quickstart-glitch).
+After you've finished the setup, try logging in by clicking the sun glasses and read our [API documentation](https://developers.gopher.email/#quickstart-glitch).
 
+If you haven't yet started setting your Gopher Extension, see below.
 
 ### Creating A New Gopher Extension
 This [Gopher](https://www.gopher.email) Extension starter kit is based on [Glitch](https://glitch.com/), but uses standard Node.js tools that can be hosted anywhere.

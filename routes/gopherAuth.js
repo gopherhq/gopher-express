@@ -35,7 +35,7 @@ router.get('/callback', (req, res) => {
   const code = req.query.code;
   const stateCookie = req.cookies.gopherState;
   const state = req.query.state;
-  if(stateCookie === state) {
+  if(stateCookie !== state) {
     return res.send("Error: You may have been redirected to a different place from where you started, or your cookies are not being saved. (State mis-match)");
   }
   const options = {

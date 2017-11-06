@@ -1,4 +1,4 @@
-if(!process.env.EXTENSION_URL || !process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
+if(!process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
   console.log('Please fill out the settings in the .env file to connect with Gopher');
   process.exit();
 }
@@ -13,7 +13,7 @@ module.exports = {
   apiHost: apiHost,
   clientId: clientId,
   clientSecret: clientSecret,
-  redirectUri: extensionUrl + 'auth/callback',
+  redirectUri: 'https://' + process.env.PROJECT_DOMAIN + '.glitch.me/auth/callback',
   tokenHost: apiHost,
   tokenPath: apiHost + 'api/v1/oauth2/access_token',
   authorizePath: apiHost + 'settings/oauth2_authorize',

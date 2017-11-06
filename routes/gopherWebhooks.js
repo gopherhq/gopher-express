@@ -17,7 +17,11 @@ router.use(/on*/, gopherUtils.validateWebhook);
 */
 
 router.post('/onCommand', function(request, response) {
-  console.log('onCommand hit');
+  console.log('onCommand Webhook', request.body);
+  // return response
+  //   .set('Content-Type', 'application/json')
+  //   .send(`{"version": 1, "foo": fdas}`);
+  
   response.json(
     {
       "version": 1,
