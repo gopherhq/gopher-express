@@ -8,8 +8,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js --port 3011",
-    "ngrok": "ngrok http localhost:3011 --subdomain=gopher-express"
+    "dev": "concurrently \"nodemon server.js --port 3011\" \"ngrok http localhost:3011 --subdomain=gopher-express\""
   },
   "dependencies": {
     "body-parser": "^1.18.2",
