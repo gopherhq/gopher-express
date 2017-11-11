@@ -9,6 +9,7 @@ const _ = require('lodash');
 // Validates your webhook and populates the Gopher API client (ex: "onCommand, onAction, etc")
 router.use(/on*/, gopherUtils.validateWebhook);
 
+
 /*
 
   onCommand – Hit when an email command (ex: invite@my-cmd.gopher.email) has been received.
@@ -17,11 +18,7 @@ router.use(/on*/, gopherUtils.validateWebhook);
 */
 
 router.post('/onCommand', function(request, response) {
-  console.log('onCommand Webhook', request.body);
-  // return response
-  //   .set('Content-Type', 'application/json')
-  //   .send(`{"version": 1, "foo": fdas}`);
-  
+  console.log('onCommand Webhook', request.body);  
   response.json(
     {
       "version": 1,
@@ -81,22 +78,52 @@ router.post('/onCommand', function(request, response) {
   
 */
 
-
 router.post('/onTrigger', function(request, response) {
-  response.send({
-    version: "1",
+    response.send({
+    version: 1,
+    task: {
+      "reference_email": {
+        "to": ["newperson@email.com", "anothernewperson@gmail.com", "anotherperson@gmail.com"],
+        "cc": ["someone@new.com"]
+      },
+      "private_data": {
+        "noteid": "fdasfdsa"
+      }
+    },
     extension: {
       "private_data": {
-        "triggered": "23"
+        "more_data": "12345"
       }
     }
   })
   
 });
 
-router.post('/', function(reqest, response) {
-  console.log(reqest);
-  response.send({ok: true});
+
+/*
+
+  onAction – Hit when an email-command is issued
+  
+*/
+
+router.post('/onAction', function(reqest, response) {
+  response.send({
+    version: 1,
+    task: {
+      "reference_email": {
+        "to": ["newemail@email.com"], //add an recipient to your reference email
+        "cc": ["someone@new.com"]
+      },
+      "private_data": {
+        "noteid": "fdasfdsa"
+      }
+    },
+    extension: {
+      "private_data": {
+        "more_data": "12345"
+      }
+    }
+  })
 })
 
 module.exports = router;
