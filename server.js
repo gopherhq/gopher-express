@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
@@ -39,6 +40,6 @@ app.get('/', gopherUtils.requireLogin, (req, res) => {
 });
 
 
-const listener = app.listen(process.env.PORT || 3002, function () {
+const listener = app.listen(process.env.PORT || 3011, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });

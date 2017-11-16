@@ -18,6 +18,7 @@ $(function() {
   //  if they now just logged in
   if (getUrlParameter('welcome')) {
    displaySuccess('This Gopher Extension has been installed on your account and is ready for use');
+    $('#welcome').removeClass('hide');
   }
 
   // handle form submission
