@@ -27,15 +27,45 @@
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 			</div>
       <!-- End Dialogs -->
+            
+      <div class="jumbotron hide" id="welcome">
+        <h1>Welcome</h1>
+        <p>
+          Edit this page in public/settings.html. Welcome your users. 
+          Tell them how great your extension is. You can also accept settings and 
+          initiate OAuth connections to other accounts. (This "welcome" block only shows after successfully logging in).
+        </p>
+        <button class="btn btn-primary">
+          Here's A Button
+        </button>
+      </div>
       
-			<section class="row " id="command-settings">
+      <section class="row " id="command-settings">
 				<div class="col-sm-7">
 					<h1>Extension Settings</h1>
           <p>
-            Your extension can accept various settings. These settings are sent with every webhook under
-            <code>extension.private_data</code>.  To add / remove settings, just copy / paste form fields (view 
-            source for instructions). Open your browser console to view settings data. Then fire a few test 
-            webhooks in the Sandbox and see where they come in.
+            Your extension settings are are saved in the core Gopher API, allowing your extension to be 
+            wonderfully stateless. These settings are sent with with every Gopher webhook under the key:
+            <code>extension.private_data</code>. 
+          </p>
+          <p>
+            Store useful things! For example:
+            <ul>
+              <li>Custom followup messages</li>
+              <li>User logos</li>
+              <li>OAuth Tokens granting access to antoher service</li>
+          </ul>
+          </p>
+          <p>
+            Adding and removing settings is easy, just copy / paste form fields (view 
+            source). Your extension stores free-form JSON so new settings Just Work&copy;.
+          </p>
+          <p>
+            This framework logs all settings to the console. This is the same data that will 
+            arrive in the webhooks.
+          </p>
+          <p>
+            <strong>Please note that this is an alpha-release. Contributions, bug-fixes and feedback are welcome.</strong>
           </p>
                     
 					<form class="form-horizontal settings-form hide" method="POST" action="/saveSettings">
@@ -112,8 +142,8 @@
             
             <!-- Side-Panel -->
 						<h3>Helper Text</h3>
-						<p>You can add some text here to help your users.</p>
-						<p>Need help? Send us an email <a href="mailto:help@humans.fut.io">help@humans.fut.io</a></p>
+						<p>You can add some text here to help your users. This is all, of course, totally editable. It's just a starting point.</p>
+						<p>Need help? Join the<br /> <a href="slackin.gopheremail.com">Gopher Slack Channel</a></p>
              <!-- Side-Panel -->
 					</div>
 
