@@ -1,10 +1,7 @@
 {
-  "//1": "describes your app and its dependencies",
-  "//2": "https://docs.npmjs.com/files/package.json",
-  "//3": "updating this file will download and update your packages",
-  "name": "my-gomix-app",
+  "name": "gopher-express",
   "version": "0.0.1",
-  "description": "What am I about?",
+  "description": "A node / express starter kit for creating Gopher extensions",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -12,6 +9,7 @@
   },
   "dependencies": {
     "body-parser": "^1.18.2",
+    "concurrently": "^3.5.1",
     "cookie-parser": "^1.4.3",
     "crypto": "^1.0.1",
     "dotenv": "^4.0.0",
