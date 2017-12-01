@@ -29,7 +29,6 @@ function fetchSettings(cb) {
     "headers": {
       "authorization": "Bearer " + Cookies.get('gopherToken'),
       "cache-control": "no-cache",
-      "postman-token": "64c4f32e-a22a-92ca-dbf4-148c4aa7118f"
     }
   }
     
@@ -97,7 +96,6 @@ function saveSettings(settings, cb) {
       "authorization": "Bearer " + Cookies.get('gopherToken'),
       "content-type": "application/json",
       "cache-control": "no-cache",
-      "postman-token": "443bd189-9a78-7e47-2b36-5385e2f154b8"
     },
     "processData": false,
     "data": JSON.stringify(settings)

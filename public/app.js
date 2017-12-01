@@ -1,5 +1,6 @@
-var Cookies = window.Cookies;
+
 $(function() {
+  var Cookies = window.Cookies;  
   
   //populate settings
   fetchSettings(function(err, settings) {
@@ -16,8 +17,17 @@ $(function() {
   
   //  if they now just logged in
   if (getUrlParameter('welcome')) {
+        
    displaySuccess('This Gopher Extension has been installed on your account and is ready for use');
     $('#welcome').removeClass('hide');
+    
+    // silently save gopherToken to API so it arrives with future webhooks
+    saveSettings({
+      "gopher_token": Cookies.get('gopherToken')
+    }).error(function(err) {
+      displayError("We could not save your login token to Gopher. Some of your email actions may not work properly. Please contact the developer");
+    })
+
   }
 
   // handle form submission
