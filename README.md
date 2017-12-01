@@ -1,7 +1,7 @@
 # Almost Done!
 
 Now, Gopher needs to know the URL of your new extension. Enter it like this:
-![Finish Setup](https://file-gvbyvnkcer.now.sh/ "Finish setting up your extenion").
+![Finish Setup](https://file-rzswqopban.now.sh/ "Finish setting up your extenion").
 
 You just...
 1. Right-click the the "show" button and <strong>copy</strong> (see above)
