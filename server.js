@@ -1,4 +1,5 @@
 require('dotenv').config();
+const debug = require('debug')('gopher-express');
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
@@ -12,7 +13,6 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static('public'));
 const gopherUtils = require('./lib/gopherUtils');
-
 /**
  * 
  * Process and respond to webhooks in /routes/gopherWebhooks.js

@@ -1,3 +1,4 @@
+const debug = require('debug')('gopher-express');
 const express = require('express');
 const router = express.Router();
 const OAuth2 = require('simple-oauth2');
@@ -46,12 +47,12 @@ router.get('/callback', (req, res) => {
 
   oauth2.authorizationCode.getToken(options, (error, result) => {
     if (error) {
-      console.error('Access Token Error', error.message);
+      debug('Access Token Error', error.message);
       return res.json('Authentication failed');
     }
     
     const tokenDetails = oauth2.accessToken.create(result);
-    console.log('Access token is: ', tokenDetails.token.access_token);
+    debug('Access token is: ', tokenDetails.token.access_token);
     return res
             .cookie('gopherToken', tokenDetails.token.access_token)
             .redirect('/?welcome=1');
