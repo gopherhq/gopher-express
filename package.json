@@ -21,7 +21,7 @@
     "lodash": "^4.17.4",
     "request": "^2.83.0",
     "simple-oauth2": "^1.4.0",
-    "unix-timestamp": "^0.2.0",
+    "unix-timestamp": "^0.2.0"
   },
   "engines": {
     "node": "8.9.1"
@@ -37,7 +37,5 @@
   "devDependencies": {
     "debug": "^3.1.0",
     "nodemon": "^1.11.0"
-  }
-}emon": "^1.11.0"
   }
 }

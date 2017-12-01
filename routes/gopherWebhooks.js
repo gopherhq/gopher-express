@@ -5,7 +5,6 @@ const config = require('../config.js');
 const gopherUtils = require('../lib/gopherUtils');
 const _ = require('lodash');
 
-
 // Validates your webhook and populates the Gopher API client (ex: "onCommand, onAction, etc")
 router.use('on*', gopherUtils.validateWebhook);
 
@@ -16,25 +15,25 @@ router.post('/onCommand', function(request, response) {
   let completeJsonResponse = {
       "version": 1, 
       task: {
-        reminder_time: 2512090247758, // unix timestamp of when trigger event will be fired for this task
-        reminder_timeformat: "3weeks", // natural language reminder date (can be recurring) for triggering
-        reference_email: { // a mutable version of the original email
+        // reminder_time: 2512090247758, // unix timestamp of when trigger event will be fired for this task
+        reminder_timeformat: "1sec", // natural language reminder date (can be recurring) for triggering. Set to "1sec" to test a task.trigger event
+        reference_email: { // a mutable version of the original email. The onCommand hook pre-populates these. Your webhook can override them depending on the case (ex: this could represent a future email, not the original email)
           to: [],
           cc: [],
           bcc: [],
           from: "",
-          subject: "Subject", // You can set these to static values, or passed in the webhook.
+          subject: "",
           html: "",
         },
-        "private_data": { // store key/value data accessible to only this task (sent on every future webhook for this task)
-          "contact_id": "12345" // a random key/value pair..this could be anything
+        "private_data": { // store key/value data accessible to only this task
+          "contact_id": "12345" // any key / value pairs
         }
       },
       "response": [
         { // This is a static email response. Add your email to the 'to' field if you'd like. 
           // In practice, these values would be dynamically pulled from the webhook post.
           type: "email",
-          to: "",
+          to: "esweetland@gmail.com",
           cc: "",
           bcc: "",
           from: "Sender Name",
@@ -45,7 +44,6 @@ router.post('/onCommand', function(request, response) {
             {
               type: "soft-error",
               text: "Give the user an error here" // For example, if a user has to login to set up a plugin
-              
             },
             {
               type: "title",
@@ -103,15 +101,14 @@ router.post('/onCommand', function(request, response) {
               body: "This is a Gopher email-action, a handy way of getting stuff done without ever leaving your inbox."
             },
             { // (Temporarily used snippet to force elements in their own section)
-              type: 'html',
-              text: '<table width="100%" border="0"><tr><td></td></tr></table>',
+              type: "html",
+              text: `<table width="100%" border="0"><tr><td></td></tr></table>`,
             }
-
           ]
         }
       ]
   };
-      
+  
   response.send(completeJsonResponse);
 });
 
@@ -121,18 +118,64 @@ router.post('/onTrigger', function(request, response) {
   response.send({
     version: "1",
     extension: {
-      "private_data": {
-        "triggered": "23"
+      private_data: {
+        triggered: "1"
       }
     },
     response: [
       {
         type: "email",
-        
+        to: "esweetland@gmail.com",
+        subject: "This gets sent when the task is triggered",
+        body: [
+          {
+            type: "title",
+            text: "Task Triggered"
+          },
+          {
+            type: "html",
+            text: "This email gets sent when a task has been triggered"
+          }
+        ]
       }
     ]
   })
-  
 });
+
+
+// onAction
+router.post('/onAction', function(request, response) {
+  response.send({
+    version: "1",
+    extension: {
+      private_data: {
+        action_data: "foo"
+      }
+    },
+    response: [
+      {
+        type: "email",
+        to: "blackhole@gopher.email",
+        subject: "An email confirming the action took place.",
+        body: [
+          {
+            type: "title",
+            text: "An Action Took Place"
+          },
+          {
+            type: "html",
+            text: `<p>Your action could:
+                    <ul>
+                      <li>Send a confirmation email to the user</li>
+                      <li>Perfrom various tasks for the user but not send any response.</li>
+                      <li>Trigger emails to be sent to other people</li>
+                    </ul>`
+          }
+        ]
+      }
+    ]
+  })
+});
+
 
 module.exports = router;

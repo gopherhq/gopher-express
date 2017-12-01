@@ -1,5 +1,4 @@
 var Cookies = window.Cookies;
-
 $(function() {
   
   //populate settings
