@@ -11,7 +11,6 @@ app.use(bodyParser.json({
 }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static('public'));
 const gopherUtils = require('./lib/gopherUtils');
 /**
  * 
@@ -27,13 +26,14 @@ app.use('/gopher.js', gopherUtils.requireLogin, gopherUtils.jsTokenizer);  // au
 
 /**
  * 
- * Edit public/settings.html to update the settings page
+ * Edit public/index.html to update the settings page
  * 
 */
 app.get('/', gopherUtils.requireLogin, (req, res) => {
-  res.sendFile(__dirname + '/public/settings.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
+app.use(express.static('public'));
 
 const listener = app.listen(process.env.PORT || 3011, function () {
   console.log('Your app is listening on port ' + listener.address().port);

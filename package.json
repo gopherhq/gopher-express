@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "concurrently \"nodemon server.js --port 3011\" \"ngrok http localhost:3011 \""
+    "dev": "concurrently \"nodemon --inspect-brk server.js --port 3011\" \"ngrok http localhost:3011,9229 --subdomain=gopher-express\""
   },
   "dependencies": {
     "body-parser": "^1.18.2",
