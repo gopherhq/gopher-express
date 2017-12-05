@@ -11,17 +11,18 @@ app.use(bodyParser.json({
 }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+
 const gopherUtils = require('./lib/gopherUtils');
+const gopherAuth = require('./routes/gopherAuth');
+app.use('/auth', gopherAuth);
+
 /**
  * 
  * Process and respond to webhooks in /routes/gopherWebhooks.js
  * 
 */
 const webhooks = require('./routes/gopherWebhooks');
-app.use(webhooks);
-const gopherAuth = require('./routes/gopherAuth');
-app.use('/auth', gopherAuth);
-app.use('/gopher.js', gopherUtils.requireLogin, gopherUtils.jsTokenizer);  // automatically populated with config values
+app.use('/webhooks', webhooks);
 
 
 /**
@@ -32,6 +33,8 @@ app.use('/gopher.js', gopherUtils.requireLogin, gopherUtils.jsTokenizer);  // au
 app.get('/', gopherUtils.requireLogin, (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
+app.use('/gopher.js', gopherUtils.requireLogin, gopherUtils.jsTokenizer);  // automatically populated with config values
+
 
 app.use(express.static('public'));
 

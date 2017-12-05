@@ -5,13 +5,11 @@ const config = require('../config.js');
 const gopherUtils = require('../lib/gopherUtils');
 const _ = require('lodash');
 
-// Validates your webhook and populates the Gopher API client (ex: "onCommand, onAction, etc")
-router.use('on*', gopherUtils.validateWebhook);
+// Validates your webhook and populates the Gopher API client
+router.use(gopherUtils.validateWebhook);
 
-// onCommand – Fires when an email command (ex: invite@my-cmd.gopher.email) has been received.
-router.post('/onCommand', function(request, response) {
-  
-  // This is a complete reference of all available JSON fields
+router.post('/', function(request, response) {
+  // An example response containing all available JSON responses to the Gopher API
   let completeJsonResponse = {
       "version": 1, 
       task: {
@@ -107,74 +105,9 @@ router.post('/onCommand', function(request, response) {
           ]
         }
       ]
-  };
+  }
   
   response.send(completeJsonResponse);
-});
-
-
-// onTrigger – Hit when a command is triggered (ex: a reminder is due).
-router.post('/onTrigger', function(request, response) {
-  response.send({
-    version: "1",
-    extension: {
-      private_data: {
-        triggered: "1"
-      }
-    },
-    response: [
-      {
-        type: "email",
-        to: "esweetland@gmail.com",
-        subject: "This gets sent when the task is triggered",
-        body: [
-          {
-            type: "title",
-            text: "Task Triggered"
-          },
-          {
-            type: "html",
-            text: "This email gets sent when a task has been triggered"
-          }
-        ]
-      }
-    ]
-  })
-});
-
-
-// onAction
-router.post('/onAction', function(request, response) {
-  response.send({
-    version: "1",
-    extension: {
-      private_data: {
-        action_data: "foo"
-      }
-    },
-    response: [
-      {
-        type: "email",
-        to: "blackhole@gopher.email",
-        subject: "An email confirming the action took place.",
-        body: [
-          {
-            type: "title",
-            text: "An Action Took Place"
-          },
-          {
-            type: "html",
-            text: `<p>Your action could:
-                    <ul>
-                      <li>Send a confirmation email to the user</li>
-                      <li>Perfrom various tasks for the user but not send any response.</li>
-                      <li>Trigger emails to be sent to other people</li>
-                    </ul>`
-          }
-        ]
-      }
-    ]
-  })
 });
 
 

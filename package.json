@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "concurrently \"nodemon --inspect-brk server.js --port 3011\" \"ngrok http localhost:3011,9229 --subdomain=gopher-express\""
+    "dev": "concurrently \"nodemon server.js --port 3011\" \"ngrok http localhost:3011\""
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -15,7 +15,7 @@
     "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
-    "fut-node": "git+https://github.com/rsweetland/fut-node.git#0.2",
+    "gopher-node": "git+https://github.com/gopherhq/gopher-node.git#0.2",
     "lodash": "^4.17.4",
     "request": "^2.83.0",
     "simple-oauth2": "^1.4.0",
@@ -25,7 +25,7 @@
     "node": "8.9.1"
   },
   "repository": {
-    "url": "github.com/rsweetland/gopher-express"
+    "url": "github.com/gopherhq/gopher-express"
   },
   "keywords": [
     "gopher",
