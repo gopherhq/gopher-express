@@ -14,7 +14,7 @@ router.post('/', function(request, response) {
       "version": 1, 
       task: {
         // reminder_time: 2512090247758, // unix timestamp of when trigger event will be fired for this task
-        // reminder_timeformat: "1sec", // natural language reminder date (can be recurring) for triggering. Set to "1sec" to test a task.trigger event
+        // reminder_timeformat: "3days", // natural language reminder date (can be recurring) for triggering. Set to "1sec" to test a task.trigger event
         reference_email: { // a mutable version of the original email. The onCommand hook pre-populates these. Your webhook can override them depending on the case (ex: this could represent a future email, not the original email)
           to: [],
           cc: [],

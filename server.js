@@ -15,6 +15,9 @@ app.use(cookieParser());
 const gopherUtils = require('./lib/gopherUtils');
 const gopherAuth = require('./routes/gopherAuth');
 app.use('/auth', gopherAuth);
+const gopherCrud = require('./routes/gopherCrud');
+app.use(gopherCrud);
+
 
 /**
  * 

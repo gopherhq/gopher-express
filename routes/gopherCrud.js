@@ -6,8 +6,6 @@ const config = require('../config');
 const util = require('util');
 var gopherClient = '';
 
-router.post('/test', (req, res) => res.send('ok'));
-
 //populate gopherClient
 router.use(function(req, res, next) {
   gopherClient = req.app.get('gopherClient');
