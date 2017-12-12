@@ -24,7 +24,7 @@ function fetchSettings(cb) {
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": gopherBaseUrl + "api/v3/extensions/self/data/",
+    "url": gopherBaseUrl + "api/v1/extensions/self/data/",
     "method": "GET",
     "headers": {
       "authorization": "Bearer " + Cookies.get('gopherToken'),
@@ -90,7 +90,7 @@ function saveSettings(settings, cb) {
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": gopherBaseUrl + "api/v3/extensions/self/data/",
+    "url": gopherBaseUrl + "api/v1/extensions/self/data/",
     "method": "POST",
     "headers": {
       "authorization": "Bearer " + Cookies.get('gopherToken'),
