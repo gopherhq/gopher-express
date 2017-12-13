@@ -1,26 +1,35 @@
-# Almost Done!
+# Welcome to Glitch
+This is a browser-based development environment created by [Fog Creek](http://www.fogcreek.com/) that contains an editable copy of [Gopher Express](https://github.com/gopherhq/gopher-express).
 
-Now, Gopher needs to know the URL of your new extension. Enter it like this:
-![Finish Setup](https://file-rzswqopban.now.sh/ "Finish setting up your extenion").
+# One last step
+Gopher needs one last setting to complete setup: The base URL. 
 
-You just...
-1. Right-click the the "show" button and <strong>copy</strong> (see above)
-2. In the Gopher Admin (where you just were) and <strong>paste</strong> as the Base URL. 
-3. In the Gopher Admin enter "Callback URI" as `[base-url]/auth/callback`.
+To set this:
+
+1. Copy the public URL of your Glitch project: 
+![Copy your Glitch project public URL from the menu in the upper-left](http://fut-cdn.s3.amazonaws.com/gopher/step1.png)
+
+2. On your extension page in the Gopher Admin UI, click this link:
+![On your Extenion Settings page, click this link](http://fut-cdn.s3.amazonaws.com/gopher/step2.png)
+
+3. Paste your settings into the Base URL field.
+![Paste the value of your Base URL](http://fut-cdn.s3.amazonaws.com/gopher/step3.png) (Gopher identifies you are using the Glitch Quickstart and fills in the other fields automatically)
+
+4. Click "Save" install your extension and you'll be ready to start building.
 
 # Gopher Express
-Welcome to your new [Glitch-powered](https://glitch.com/) Gopher Extension! 
+Welcome to Gopher Express!
 
 The code is well commented. Most of your work will be in: 
  * routes/gopherWebhooks – all email interactions happen via these webhooks
  * views/settings.html – welcome your users and build useful settings pages here
- * public/app.s – connect to other services and save your tokens using the methods shown here.
+ * public/app.s – connect to other services and save your tokens in the Gopher Core API using the methods shown here.
 
-If you're having trouble, come find us in the [Gopher Slack Channel](http://slackin.gopheremail.com).
+If you're having trouble, send us an email: help+gopher@humans.fut.io.
 
-Note: If you haven't yet set up a Gopher Extension, [start by doing that](https://www.gopheremail.com/developer/create).
+Note: If you did not arrive here from the Gopher Admin UI, [start by setting up a new extension](https://www.gopheremail.com/developer/create).
 
-Read our [API Docs](https://developers.gopher.email) for more information.
+Read our [API Docs](https://developer.gopher.email) for more information.
 
 ## Exporting / Local Development
 Gopher Express is just Node.js and Express, making it very flexible. To run your extension locally:
