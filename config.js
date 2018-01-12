@@ -9,12 +9,10 @@ const extensionUrl = process.env.EXTENSION_URL;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const apiHost = process.env.API_HOST || "https://api.gopher.email/";
+const scope = process.env.SCOPE || "get_user_info extension_manage_self";
 const redirectUrl =
   process.env.REDIRECT_URI ||
   "https://" + process.env.PROJECT_DOMAIN + ".glitch.me/auth/callback";
-const scope =
-  process.env.SCOPE ||
-  "get_user_info extension_manage_self manage_reminders read_reminders manage_logs read_logs read_tasks manage_tasks manage_extensions";
 
 module.exports = {
   extensionUrl: extensionUrl,
