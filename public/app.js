@@ -1,10 +1,10 @@
 $(function() {
   var Cookies = window.Cookies;
 
-  // Your custom JS goes here 
+  // Your custom JS goes here
   // _utils.js handles the settings form and provides utilities.
   // An autheneticated Gohper Client and jQuery are available. Onward! 🚀
-  
+
   // Handle newly authenticated users
   if (getUrlParameter("welcome")) {
     $("#welcome").removeClass("hide");
@@ -16,7 +16,8 @@ $(function() {
       .saveExtensionData({ gopher_token: Cookies.get("gopherToken") })
       .catch(function(err) {
         displayError(
-          "There was an error saving your Gopher settings. Please contact the extension developer. The error was: " + JSON.stringify(err);
+          "There was an error saving your Gopher settings. Please contact the extension developer. The error was: " +
+            JSON.stringify(err)
         );
       });
   }

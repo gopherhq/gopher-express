@@ -29,7 +29,11 @@
     "url": "github.com/gopherhq/gopher-express"
   },
   "license": "MIT",
-  "keywords": ["gopher", "email", "productvitiy"],
+  "keywords": [
+    "gopher",
+    "email",
+    "productvitiy"
+  ],
   "devDependencies": {
     "debug": "^3.1.0",
     "nodemon": "^1.11.0"

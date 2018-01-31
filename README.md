@@ -37,14 +37,15 @@ Read our [API Docs](https://developer.gopher.email) for more information.
 
 ## Exporting / Local Development
 
-Gopher Express is just Node.js and Express, making it very flexible. To run your extension locally:
+Gopher Express uses Node.js and Express. To run your extension locally:
 
 * export to Github or Download (in Glitch's advanced settings)
-* run `npm install`, then `npm start`
-* map a domain to localhost with [ngrok](http://ngrok.io) or another service (see the `dev` script in package.json)
-* update `.env` to reflect your new hosting environment (copy from `.env.example')
-* create a new extension on gopher.email with that domain
+* run `npm install`, then `npm run dev`
+* to allow the Gopher API to send webhooks to your extension,
+  run `npm run ngrok` to map a publicly accessible domain to your local install
+* copy `.env.example` into `.env` and add your environment details
+* edit your extension's settings on gopher.email to reflect your new environment.
 
 ## Deploying
 
-Glitch is a great platform for prototyping. Once your extension is ready for deployment you can easily export your extension (above) and host on any other Node.js platform.
+Glitch is a great platform for prototyping. Once your extension is ready for deployment you can easily export your extension (above) and host it on any Node.js platform, for example [Heroku](https://www.heroku.com/) or [Zeit Now](https://zeit.co/now).

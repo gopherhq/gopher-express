@@ -7,7 +7,6 @@ const express = require("express");
 const router = express.Router();
 const request = require("request");
 const config = require("../lib/config");
-const util = require("util");
 let gopherClient = "";
 
 // Get the API client for all subsequent requests
