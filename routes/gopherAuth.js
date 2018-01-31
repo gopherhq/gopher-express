@@ -2,37 +2,18 @@ const debug = require("debug")("gopher-express");
 const express = require("express");
 const router = express.Router();
 const OAuth2 = require("simple-oauth2");
-const config = require("../config");
-let gopherClient = "";
+const config = require("../lib/config");
+const Gopher = require("gopherhq");
+const gopherClient = new Gopher(config);
 
-const oauth2 = OAuth2.create({
-  client: {
-    id: config.clientId,
-    secret: config.clientSecret
-  },
-  auth: {
-    tokenHost: config.tokenHost,
-    tokenPath: config.tokenPath,
-    authorizePath: config.authorizePath
-  }
-});
-
-let state = Math.random()
-  .toString()
-  .substr(3, 15);
-
-const authorizationUri = oauth2.authorizationCode.authorizeURL({
-  redirect_uri: config.redirectUri,
-  scope: config.scope,
-  state: state
-});
-
+// Redirect to login URL
 router.get("/login", (req, res) => {
-  res.cookie("gopherState", state).redirect(authorizationUri);
+  const { uri, state } = gopherClient.getAuthorizationUri();
+  res.cookie("gopherState", state).redirect(uri);
 });
 
-// Callback service parsing the authorization token and asking for the access token
-router.get("/callback", (req, res) => {
+// After user authenticates, parse the auth code and get the actual auth token
+router.get("/callback", async (req, res) => {
   const code = req.query.code;
   const stateCookie = req.cookies.gopherState;
   const state = req.query.state;
@@ -41,24 +22,15 @@ router.get("/callback", (req, res) => {
       "Error: You may have been redirected to a different place from where you started, or your cookies are not being saved. (State mis-match)"
     );
   }
-  const options = {
-    code: code,
-    redirect_uri: config.redirectUri,
-    client_id: config.clientId
-  };
 
-  oauth2.authorizationCode.getToken(options, (error, result) => {
-    if (error) {
-      debug("Access Token Error", error.message);
-      return res.json("Authentication failed");
-    }
-
-    const tokenDetails = oauth2.accessToken.create(result);
-    debug("Access token is: ", tokenDetails.token.access_token);
+  try {
+    let tokenDetails = await gopherClient.getAccessToken(code);
     return res
       .cookie("gopherToken", tokenDetails.token.access_token)
       .redirect("/?welcome=1");
-  });
+  } catch (e) {
+    return res.send(400, "Error fetching gopherToken" + JSON.stringify(e));
+  }
 });
 
 module.exports = router;

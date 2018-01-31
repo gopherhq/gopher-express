@@ -1,41 +1,23 @@
 $(function() {
   var Cookies = window.Cookies;
 
-  //populate settings
-  fetchSettings(function(err, settings) {
-    console.log("Gopher Settings: ", settings);
-    if (err) {
-      console.log("Error fetching settings", err || settings);
-      Cookies.remove("gopherToken");
-      return displayError(
-        "Sorry, Gopher had trouble logging in. Please refresh the page to login again."
-      );
-    }
-
-    $(".settings-form").removeClass("hide");
-    populateSettingsForm(".settings-form", ".fut-setting", settings);
-  });
-
-  //  if they now just logged in
+  // Your custom JS goes here 
+  // _utils.js handles the settings form and provides utilities.
+  // An autheneticated Gohper Client and jQuery are available. Onward! 🚀
+  
+  // Handle newly authenticated users
   if (getUrlParameter("welcome")) {
-    displaySuccess(
-      "This Gopher Extension has been installed on your account and is ready for use"
-    );
     $("#welcome").removeClass("hide");
+    displaySuccess("Extension successfully installed!");
+    // displayError("Something went wrong");
 
     // silently save gopherToken to API so it arrives with future webhooks
-    saveSettings({
-      gopher_token: Cookies.get("gopherToken")
-    }).error(function(err) {
-      displayError(
-        "We could not save your login token to Gopher. Some of your email actions may not work properly. Please contact the developer"
-      );
-    });
+    gopherClient
+      .saveExtensionData({ gopher_token: Cookies.get("gopherToken") })
+      .catch(function(err) {
+        displayError(
+          "There was an error saving your Gopher settings. Please contact the extension developer. The error was: " + JSON.stringify(err);
+        );
+      });
   }
-
-  // handle form submission
-  $(".settings-form").submit(function() {
-    submitSettingsForm(this, ".fut-setting");
-    return false;
-  });
 });

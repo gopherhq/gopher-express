@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev":
-      "concurrently \"nodemon server.js --port 3011\" \"ngrok http localhost:3011 --subdomain=gopher-express\""
+    "dev": "nodemon server.js --port 3011",
+    "ngrok": "ngrok http localhost:3011"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -16,7 +16,7 @@
     "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
-    "gopherhq-node": "0.0.3-development",
+    "gopherhq": "0.0.12-beta",
     "lodash": "^4.17.4",
     "request": "^2.83.0",
     "simple-oauth2": "^1.4.0",

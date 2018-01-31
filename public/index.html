@@ -1,8 +1,10 @@
-    <!--  User Settings
-          Add new settings to your extension by just duplicating the different 
-          types of form fields below. We've taken care of the plumbing for you. 
-          When a user saves settings, the values are sent with every subsequent 
-          webhook for that user.  -->
+<!--  
+
+  User Settings
+  Add new settings to your extension by just duplicating the different 
+  types of form fields below. We've taken care of the plumbing for you. 
+
+-->
 
 
 <!doctype html>
@@ -13,9 +15,18 @@
 		<link rel="stylesheet" type="text/css" href="./app.css">
 	</head>
 	<body>
-		<nav class="navbar navbar-fixed-top">
-			<h4><strong>Gopher Command Settings</strong></h4>
-		</nav>
+
+    <nav class="navbar navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">My Extension Name</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a id="logout" href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+
 		<div class="container" id="content">
 			
       <!-- Dialogs -->
@@ -130,6 +141,7 @@
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="save_settings">Submit</button>
+                <!-- <span class="help-block  hide"><i class="glyphicon glyphicon-ok"></i> Settings Saved </span> -->
             </div>
             </form>
             
@@ -151,16 +163,14 @@
 			</section>
     </div>
 
-		<!--Jquery, Bootstrap -->
+		<!-- Resources -->
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<!--js-cookie-->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
-		<!--moment, lodash, nprogress -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
-		<!--app-->
-		<script src="./gopher.js"></script>
+    <script src="https://unpkg.com/gopherhq@0.0.12-beta/dist/gopherhq-browser.js"></script>
+		<script src="./utils.js"></script>
 		<script src="./app.js"></script>
 	</body>
 </html>

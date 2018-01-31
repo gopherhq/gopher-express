@@ -1,6 +1,6 @@
 # Welcome to Glitch
 
-This is a browser-based development environment created by [Fog Creek](http://www.fogcreek.com/) that contains an editable copy of [Gopher Express](https://github.com/gopherhq/gopher-express).
+This is a browser-based development environment created by [Fog Creek](https://www.fogcreek.com/) that contains an editable copy of [Gopher Express](https://github.com/gopherhq/gopher-express).
 
 # One last step
 
@@ -9,13 +9,13 @@ Gopher needs one last setting to complete setup: The base URL.
 To set this:
 
 1. Copy the public URL of your Glitch project:
-   ![Copy your Glitch project public URL from the menu in the upper-left](http://fut-cdn.s3.amazonaws.com/gopher/step1.png)
+   ![Copy your Glitch project public URL from the menu in the upper-left](https://fut-cdn.s3.amazonaws.com/gopher/step1.png)
 
 2. On your extension page in the Gopher Admin UI, click this link:
-   ![On your Extenion Settings page, click this link](http://fut-cdn.s3.amazonaws.com/gopher/step2.png)
+   ![On your Extenion Settings page, click this link](https://fut-cdn.s3.amazonaws.com/gopher/step2.png)
 
 3. Paste your settings into the Base URL field.
-   ![Paste the value of your Base URL](http://fut-cdn.s3.amazonaws.com/gopher/step3.png) (Gopher identifies you are using the Glitch Quickstart and fills in the other fields automatically)
+   ![Paste the value of your Base URL](https://fut-cdn.s3.amazonaws.com/gopher/step3.png) (Gopher identifies you are using the Glitch Quickstart and fills in the other fields automatically)
 
 4. Click "Save" install your extension and you'll be ready to start building.
 

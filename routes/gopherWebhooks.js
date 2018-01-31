@@ -1,16 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const bodyParser = require("body-parser");
-const config = require("../config.js");
-const gopherUtils = require("../lib/gopherUtils");
+const config = require("../lib/config.js");
 const _ = require("lodash");
+const gopherUtils = require("../lib/gopherUtils");
 
 // Validates your webhook and populates the Gopher API client
+router.use(gopherUtils.rawBody);
 router.use(gopherUtils.validateWebhook);
 
 router.post("/", function(request, response) {
+  console.log("sending webhook response");
+
   // An example response containing all available JSON responses to the Gopher API
-  let completeJsonResponse = {
+  // See below for more examples
+  let webhookResponse = {
     version: 1,
     task: {
       // reminder_time: 2512090247758, // unix timestamp of when trigger event will be fired for this task
@@ -34,7 +37,7 @@ router.post("/", function(request, response) {
         // This is a static email response. Add your email to the 'to' field if you'd like.
         // In practice, these values would be dynamically pulled from the webhook post.
         type: "email",
-        to: "esweetland@gmail.com",
+        to: "name@example.com",
         cc: "",
         bcc: "",
         from: "Sender Name",
@@ -104,16 +107,14 @@ router.post("/", function(request, response) {
               "This is a Gopher email-action, a handy way of getting stuff done without ever leaving your inbox."
           },
           {
-            // (Temporarily used snippet to force elements in their own section)
-            type: "html",
-            text: `<table width="100%" border="0"><tr><td></td></tr></table>`
+            type: "section"
           }
         ]
       }
     ]
   };
 
-  response.send(completeJsonResponse);
+  response.send(webhookResponse);
 });
 
 module.exports = router;
