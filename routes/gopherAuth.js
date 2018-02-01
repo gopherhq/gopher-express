@@ -25,11 +25,16 @@ router.get("/callback", async (req, res) => {
 
   try {
     let tokenDetails = await gopherClient.getAccessToken(code);
+    if (tokenDetails instanceof Error) throw tokenDetails;
     return res
       .cookie("gopherToken", tokenDetails.token.access_token)
       .redirect("/?welcome=1");
   } catch (e) {
-    return res.send(400, "Error fetching gopherToken" + JSON.stringify(e));
+    console.log(e);
+    return res.send(
+      400,
+      "There was an error fetching your authentication token (view logs for details)"
+    );
   }
 });
 
