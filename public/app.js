@@ -17,7 +17,7 @@ $(function() {
       .catch(function(err) {
         displayError(
           "There was an error saving your Gopher settings. Please contact the extension developer. The error was: " +
-            JSON.stringify(err)
+            err.message
         );
       });
   }
