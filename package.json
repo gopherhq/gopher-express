@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js --port 3011",
+    "dev": "PORT=3011 nodemon server.js",
     "ngrok": "ngrok http localhost:3011"
   },
   "dependencies": {
@@ -16,10 +16,10 @@
     "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
-    "gopherhq": "0.0.12-beta",
-    "lodash": "^4.17.4",
+    "gopherhq": "0.0.14-beta",
+    "lodash": "4.17.5",
     "request": "^2.83.0",
-    "simple-oauth2": "^1.4.0",
+    "simple-oauth2": "1.5.0",
     "unix-timestamp": "^0.2.0"
   },
   "engines": {
@@ -29,9 +29,13 @@
     "url": "github.com/gopherhq/gopher-express"
   },
   "license": "MIT",
-  "keywords": ["gopher", "email", "productvitiy"],
+  "keywords": [
+    "gopher",
+    "email",
+    "productvitiy"
+  ],
   "devDependencies": {
     "debug": "^3.1.0",
-    "nodemon": "^1.11.0"
+    "nodemon": "1.14.12"
   }
 }

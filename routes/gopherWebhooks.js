@@ -9,7 +9,7 @@ router.use(gopherUtils.rawBody);
 router.use(gopherUtils.validateWebhook);
 
 router.post("/", function(request, response) {
-  console.log("sending webhook response");
+  console.log("Webhook received!");
 
   // An example response containing all available JSON responses to the Gopher API
   // See below for more examples
@@ -25,7 +25,7 @@ router.post("/", function(request, response) {
         bcc: [],
         from: "",
         subject: "",
-        html: ""
+        html: "<p>This is a pragraph in an email</p>"
       },
       private_data: {
         // store key/value data accessible to only this task
