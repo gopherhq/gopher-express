@@ -15,10 +15,10 @@
     "crypto": "^1.0.1",
     "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
-    "express": "^4.16.2",
-    "gopherhq": "0.0.14-beta",
+    "express": "4.16.3",
+    "gopherhq": "0.0.16-beta",
     "lodash": "4.17.5",
-    "request": "^2.83.0",
+    "request": "2.85.0",
     "simple-oauth2": "1.5.0",
     "unix-timestamp": "^0.2.0"
   },
