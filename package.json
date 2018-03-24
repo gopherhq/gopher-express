@@ -14,7 +14,7 @@
     "cookie-parser": "^1.4.3",
     "crypto": "^1.0.1",
     "dotenv": "^4.0.0",
-    "ejs": "^2.5.7",
+    "ejs": "2.5.7",
     "express": "4.16.3",
     "gopherhq": "0.0.16-beta",
     "lodash": "4.17.5",

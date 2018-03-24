@@ -1,17 +1,20 @@
+/**
+    Customize This Script
+    - This is for_utils.js handles the settings form and provides utilities.
+    - An autheneticated Gohper Client and jQuery are already available.
+    - This is an early release. Things can change quickly, and feedback is welcome!    
+ */
+
 $(function() {
   var Cookies = window.Cookies;
-
-  // Your custom JS goes here
-  // _utils.js handles the settings form and provides utilities.
-  // An autheneticated Gohper Client and jQuery are available. Onward! 🚀
 
   // Handle newly authenticated users
   if (getUrlParameter("welcome")) {
     $("#welcome").removeClass("hide");
     displaySuccess("Extension successfully installed!");
-    // displayError("Something went wrong");
+    // displayError("An example of an error message");
 
-    // silently save gopherToken to API so it arrives with future webhooks
+    // Save the gopherToken so it arrives with future webhooks
     gopherClient
       .saveExtensionData({ gopher_token: Cookies.get("gopherToken") })
       .catch(function(err) {
@@ -20,5 +23,8 @@ $(function() {
             err.message
         );
       });
+
+    // If your extension requires additional api access, initiate more oauth
+    // connections here. Save them to Gopher as shown below.
   }
 });

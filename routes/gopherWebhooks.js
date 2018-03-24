@@ -1,119 +1,76 @@
 const express = require("express");
 const router = express.Router();
-const config = require("../lib/config.js");
 const _ = require("lodash");
 const gopherUtils = require("../lib/gopherUtils");
-
-// Validates your webhook and populates the Gopher API client
+let webhookResponse = null;
 router.use(gopherUtils.rawBody);
 router.use(gopherUtils.validateWebhook);
 
 router.post("/", function(request, response) {
-  console.log("Webhook received!");
+  // console.log("Instead of logging this...", request.body); // ...try using the Sandbox. It's faster and more fun 🏎
   const webhook = request.body;
+
+  // Gopher posts different events to the same URL. Webhook reference: https://docs.gopher.email/v1.0/reference#webhooks
   switch (webhook.event) {
+    /**
+     *
+     * TASK CREATED
+     * Handle when a new task is created. Ex: Send a confirmation email,
+     * schedule a followup, etc.
+     * Task reference: https://docs.gopher.email/v1.0/reference#tasks-2
+     *
+     */
     case "task.created":
-      // All available JSON responses to the Gopher API
-      let exampleWebhookResponse = {
+      webhookResponse = {
         version: 1,
-
-        // Update the Gopher Task that was just created
         task: {
-          // Set when the 'event.trigger' webhook will fire (timestamp)
-          // trigger_time: 2512090247758,
-
-          // Same as above, but FollowUpThen style, and can be recurring
-          // trigger_timeformat: "3days",
-
-          // A mutable version of the original, used as reference data for other events
-          reference_email: {
-            to: [],
-            cc: [],
-            bcc: [],
-            from: "",
-            subject: "",
-            html: "<p>This is a pragraph in an email</p>"
-          },
-
-          // Store data for only this task. Send with subsequent webhooks
-          private_data: {
-            example: "12345"
-          }
+          // The task.triggered event will now fire in 15 minutes (see below)
+          trigger_timeformat: "15min"
         },
 
-        // Send out emails. In practice, these values can be set from webhook request.
+        // Send a confirmation email.
         send_messages: [
           {
             type: "email",
-            to: "name@example.com",
-            cc: "",
-            bcc: "",
-            from: "Sender Name",
-            subject: "A Custom Email Subject From Gopher",
-            // Reply to an email-action, allowing for programatic dialog, or an emai address.
-            reply_to: { action: "arbitrary.data.string" },
-            //reply_to: "email@email.com,
+
+            // Insert your email 👇 to preview, or just use the Sandbox.
+            to: "recipient-email@example.com",
+            from: "Gopher Express",
+            subject: "Task will trigger in 15 minutes",
             body: [
               {
-                type: "soft-error",
-                text: "This error message is highlighted at the top"
-              },
-              {
                 type: "title",
-                text: "A Great Title"
+                text: "Task will trigger in 15 minutes"
               },
               {
                 type: "section",
-                title: "DESCRIPTION"
+                text: "WHAT HAPPENS NEXT?"
               },
               {
                 type: "html",
-                text: `Include images, HTML or other items here. 
-                          <p> Deflector power at maximum. Energy discharge in six seconds. Warp reactor core primary coolant failure. Fluctuate phaser resonance frequencies. Resistance is futile. Recommend we adjust shield harmonics to the upper EM band when proceeding. These appear to be some kind of power-wave-guide conduits which allow them to work collectively as they perform ship functions. Increase deflector modulation to upper frequency band.</p>
-                          <p>I have reset the sensors to scan for frequencies outside the usual range. By emitting harmonic vibrations to shatter the lattices. We will monitor and adjust the frequency of the resonators. He has this ability of instantly interpreting and extrapolating any verbal communication he hears. It may be due to the envelope over the structure, causing hydrogen-carbon helix patterns throughout. I'm comparing the molecular integrity of that bubble against our phasers.</p>
-                          <p>Sensors indicate no shuttle or other ships in this sector. According to coordinates, we have travelled 7,000 light years and are located near the system J-25. Tractor beam released, sir. Force field maintaining our hull integrity. Damage report? Sections 27, 28 and 29 on decks four, five and six destroyed. Without our shields, at this range it is probable a photon detonation could destroy the Enterprise.</p>`
+                text: `
+                <p>When this task triggers, Gopher will fire the 
+                <strong>task.triggered</strong> webhook. You can either wait 15 minutes 
+                for this to happen (boring), or use the Sandbox to trigger it right away 
+                (awesome!). Open the log message for this task, then click the 
+                lightning bolt ⚡️.</p>
+                `
               },
               {
                 type: "section",
-                title: "button styles"
+                text: "CUSTOMIZE"
               },
               {
-                type: "button",
-                text: "Primary",
-                style: "primary",
-                url: "https://www.github.com"
-              },
-              {
-                type: "button",
-                text: "Secondary)",
-                url: "https://www.github.com"
-              },
-              {
-                type: "button",
-                text: "Press Me",
-                url: "https://www.github.com"
-              },
-              {
-                type: "section",
-                title: "block buttons"
-              },
-              {
-                type: "button",
-                text: "Action Email",
-                action: "notifications.off", // An email-based action
-                subject: "Hit Send to Turn off Confirmation Emails",
-                body:
-                  "This is a Gopher email-action, a handy way of getting stuff done without ever leaving your inbox.",
-                style: "block primary"
-              },
-              {
-                type: "button",
-                text: "Action Email: Turn off confirmations",
-                action: "notifications.off",
-                style: "block",
-                subject: "Hit Send to Turn off Confirmation Emails",
-                body:
-                  "This is a Gopher email-action, a handy way of getting stuff done without ever leaving your inbox."
+                type: "html",
+                text: `Add custom HTML, buttons, sections or titles. See
+                <a 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://docs.gopher.email/v1.0/reference#email-ui-components"
+                >
+                Gopher UI Components
+                </a> 
+                for more information.`
               },
               {
                 type: "section"
@@ -122,38 +79,113 @@ router.post("/", function(request, response) {
           }
         ]
       };
-
-      response.send(exampleWebhookResponse);
+      response.send(webhookResponse);
       break;
 
+    /**
+     *
+     *  TASK TRIGGERED
+     *  Handle when a task is triggered. Ex: when a reminder becomes due. You can manually
+     *  trigger tasks in the Sandbox. More about event triggering: TODO: Insert URL
+     *
+     */
     case "task.triggered":
-      console.log("task.triggered");
-      // Handle the moment the task becomes due. Ex: Refresh information, send a followup email
+      webhookResponse = {
+        version: 1,
+
+        // Send an email reminder
+        send_messages: [
+          {
+            type: "email",
+
+            // Insert your email 👇 to preview, or just use the Sandbox.
+            to: "name@example.com",
+            from: "Gopher Express",
+
+            // Tip: render the original subject with: webhook.task.reference_email.subject
+            subject: "Here is your reminder",
+            body: [
+              {
+                type: "title",
+                text: "15 Minutes Later"
+              },
+              {
+                type: "html",
+                text: `
+                  <p>This exceedingly productive gopher shows up in your inbox, reminding you 
+                  <a 
+                    href="https://trello.com/b/AhYnpKqa/gopher-extension-ideas
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  ">
+                  how many things</a>
+                  you can do with email alone. </p>
+                `
+              },
+              {
+                type: "html",
+                text: `<img src="https://media.giphy.com/media/kKdgdeuO2M08M/giphy.gif" borer="0" width="300">`
+              },
+              {
+                type: "section",
+                text: "Actions"
+              },
+              {
+                type: "html",
+                text: `
+                <p>Reschedule it 15 minutes later using 
+                <a 
+                  href="https://docs.gopher.email/v1.0/reference#email-based-actions"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  email-based actions
+                </a>
+                </p>
+                `
+              },
+              {
+                type: "button",
+                text: "Postpone 15min",
+
+                // An email-based action https://docs.gopher.email/v1.0/reference#email-based-actions (see below)
+                action:
+                  "reschedule.for.15min.every.weds.2pm.and.some.other.text.goes.here.test",
+                subject: "Reschedule for 15 minutes",
+                body:
+                  "When you hit send, your extension will receive the task.action_received webhook.",
+                style: "block primary"
+              },
+              {
+                type: "section"
+              }
+            ]
+          }
+        ]
+      };
+      response.send(webhookResponse);
       break;
 
-    case "task.updated":
-      console.log("task.updated");
-      // Handle when a task is updated. Ex: Keep the due-date of your CRM in sync
-      break;
-
+    /**
+     *
+     *  ACTION EMAIL RECEIVED
+     *  Handle when an action email is received.
+     *  Email-Based Actions ref: https://docs.gopher.email/v1.0/reference#email-based-actions
+     *
+     */
     case "task.action_received":
-      console.log("task.action_received");
-      // Handle email-based actions. Ex: Adding notes, rescheduling, cancelling
+      webhookResponse = {
+        version: 1,
+        task: {
+          // You can also populate this dynamically from the action email with webhook.action.action.split('.')[1]
+          trigger_timeformat: "15min"
+        }
+      };
+      response.send(webhookResponse);
       break;
 
-    case "extension.triggered":
-      console.log("extension.triggered");
-      // Handle when an extension is triggered. Ex: Create a task when an event occurs
-      break;
-
-    case "extension.installed":
-      console.log("extension.installed");
-      // Handle an extension being first installed. Ex: Welcome the user
-      break;
-
-    case "extension.uninstalled":
-      console.log("extension.uninstalled");
-      // Handle when a user removes an extension. Ex: Delete associated API keys
+    default:
+      response.send({});
       break;
   }
 });

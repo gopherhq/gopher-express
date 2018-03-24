@@ -1,5 +1,9 @@
-//  This file is served via token-parsing middleware to swap out the tokens below
-//  It provides utility functions and should not require much editing.
+/**
+    Utility Scripts
+    This provides the basic front-end logic to make the UI work. 
+    If you have custom js, add it to app.js, not here. This will likely
+    be updated over time.
+ */
 
 // Globals
 var Cookies = window.Cookies;
