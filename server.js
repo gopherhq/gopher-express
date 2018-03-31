@@ -37,7 +37,7 @@ app.get("/", gopherUtils.requireLogin, (req, res) => {
  *
  */
 const exampleRoutes = require("./routes/nodeApiExamples");
-app.use(gopherUtils.requireLogin, exampleRoutes);
+app.use(exampleRoutes);
 
 app.use("/auth", gopherAuth);
 app.use("/utils.js", gopherUtils.requireLogin, gopherUtils.jsTokenizer); // automatically populated with config values
