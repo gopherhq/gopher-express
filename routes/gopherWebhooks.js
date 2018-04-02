@@ -149,8 +149,7 @@ router.post("/", function(request, response) {
                 text: "Postpone 15min",
 
                 // An email-based action https://docs.gopher.email/v1.0/reference#email-based-actions (see below)
-                action:
-                  "reschedule.for.15min.every.weds.2pm.and.some.other.text.goes.here.test",
+                action: "reschedule.15min",
                 subject: "Reschedule for 15 minutes",
                 body:
                   "When you hit send, your extension will receive the task.action_received webhook.",
