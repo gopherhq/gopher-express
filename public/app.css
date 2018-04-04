@@ -43,6 +43,11 @@ nav a {
   color: #333 !important;
 }
 
+nav #logout {
+  float: right;
+  padding: 15px 0px;
+}
+
 .settings-form {
   display: flex;
   flex-direction: column;
@@ -66,6 +71,10 @@ nav a {
 .btn-primary {
   background: #0099cc;
   color: #ffffff;
+}
+
+.btn-primary a {
+  color: white;
 }
 
 .btn-primary:hover,
