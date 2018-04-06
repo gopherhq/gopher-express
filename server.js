@@ -16,7 +16,8 @@ app.set("views", __dirname + "/public");
 
 /**
  *
- * Process and respond to webhooks in /routes/gopherWebhooks.js
+ * Your extension interacts with Gopher mainly via webhooks.
+ * Open up  /routes/gopherWebhooks.js to learn more.
  *
  */
 const webhooks = require("./routes/gopherWebhooks");
@@ -24,7 +25,9 @@ app.use("/webhooks", webhooks);
 
 /**
  *
- * Edit public/index.html, public/app.js and public/app.css to update your settings page
+ * Your public HTML page is for a user's first time login, for updating
+ * their settings and for any other task that requires a web-ui.
+ * Edit public/index.html, public/app.js and public/app.css to customize.
  *
  */
 app.get("/", gopherUtils.requireLogin, (req, res) => {
@@ -33,7 +36,8 @@ app.get("/", gopherUtils.requireLogin, (req, res) => {
 
 /**
  *
- * API Examples using the Gopher Client
+ * A few examples of using the API client.
+ * View more API methods https://github.com/gopherhq/gopherhq-js
  *
  */
 const exampleRoutes = require("./routes/nodeApiExamples");

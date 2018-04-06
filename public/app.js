@@ -1,7 +1,18 @@
 /**
-    Customize This Script
-    - This is for_utils.js handles the settings form and provides utilities.
-    - An autheneticated Gohper Client and jQuery are already available.
+        ____             _               
+      / ___| ___  _ __ | |__   ___ _ __ 
+    | |  _ / _ \| '_ \| '_ \ / _ | '__|
+    | |_| | (_) | |_) | | | |  __| |   
+      \____|\___/| .__/|_| |_|\___|_|   
+                |_|                    
+
+    Need help? Get in touch!
+    slack: slackin.gopheremail.com
+    email: help+gopher@humans.fut.io
+
+    Add your custom JS in this file
+    - _utils.js handles the settings form and provides utilities you can use here.
+    - An autheneticated Gohper Client and jQuery are already available to you.
     - This is an early release. Things can change quickly, and feedback is welcome!    
  */
 

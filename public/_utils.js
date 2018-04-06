@@ -1,8 +1,8 @@
 /**
     Utility Scripts
-    This provides the basic front-end logic to make the UI work. 
-    If you have custom js, add it to app.js, not here. This will likely
-    be updated over time.
+    Add your custom JS to app.js. Do not add it here.
+    This code provides the basic front-end logic to make the UI work 
+    and may be updated over time. 
  */
 
 // Globals

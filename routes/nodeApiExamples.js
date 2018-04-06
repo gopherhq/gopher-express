@@ -1,6 +1,22 @@
-// Examples of interacting with the Gopher API
-// See the Gopher API lib (https://www.npmjs.com/package/gopherhq) for
-// more information about what you can do with the API client.
+/**
+
+      ____             _               
+      / ___| ___  _ __ | |__   ___ _ __ 
+    | |  _ / _ \| '_ \| '_ \ / _ | '__|
+    | |_| | (_) | |_) | | | |  __| |   
+      \____|\___/| .__/|_| |_|\___|_|   
+                |_|                    
+
+    Need help? Get in touch!
+    slack: slackin.gopheremail.com
+    email: help+gopher@humans.fut.io
+
+
+ * ABOUT THIS FILE:
+ * Examples of interacting with the Gopher API
+ * in this file: https://github.com/gopherhq/gopherhq-js
+ *
+ **/
 
 const express = require("express");
 const router = express.Router();

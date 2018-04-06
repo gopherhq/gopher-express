@@ -1,3 +1,7 @@
+/**
+ * Handle auth. This should not require customization.
+ */
+
 const debug = require("debug")("gopher-express");
 const express = require("express");
 const router = express.Router();

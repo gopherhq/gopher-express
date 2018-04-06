@@ -1,43 +1,117 @@
+/**
+
+      ____             _               
+      / ___| ___  _ __ | |__   ___ _ __ 
+    | |  _ / _ \| '_ \| '_ \ / _ | '__|
+    | |_| | (_) | |_) | | | |  __| |   
+      \____|\___/| .__/|_| |_|\___|_|   
+                |_|                    
+
+    Need help? Get in touch!
+    slack: slackin.gopheremail.com
+    email: help+gopher@humans.fut.io
+
+
+ * ABOUT THIS FILE:
+ * Gopher and your extenion mainly interact with Webhooks, as demonstrated 
+ * in this file.
+ * 
+ * To illustrate:
+ * 
+ * -> (event) -> Gopher API -> Webhook (JSON) -> Your Extension
+ *                                                   | 
+ * <- (action) <- Gopher API <- Response (JSON) <- (Custom Logic)
+ * 
+ * Examples of events: emails being received, tasks updated, extension installed
+ * Examples of custom logic: add to a crm, create todo, make additional API calls to Gopher
+ * Examples of actions: send an email, save data, reschedule a task
+ * 
+ * More about webhooks: https://docs.gopher.email/v1.0/reference#webhooks
+ *
+ **/
+
 const express = require("express");
 const router = express.Router();
 const _ = require("lodash");
 const gopherUtils = require("../lib/gopherUtils");
 let webhookResponse = null;
+
+/**
+ * Validates your webhook and authenticates the Gopher REST API Client, allowing you
+ * to make additional API calls to Gopher while handling a webhook.
+ * More about the API Client: https://github.com/gopherhq/gopherhq-js
+ */
 router.use(gopherUtils.rawBody);
 router.use(gopherUtils.validateWebhook);
 
 router.post("/", function(request, response) {
-  // console.log("Instead of logging this...", request.body); // ...try using the Sandbox. It's faster and more fun 🏎
+  /**
+   *
+   * ️TIP
+   * Instead of useing console.log, use the Sandbox🏝! It lets you:
+   * ✓ Inspect the JSON request and response
+   * ✓ Collapse / expand nested JSON objects
+   * ✓ View the rendered email
+   * ✓ Validate your JSON schema
+   * ✓ Trigger webhook events
+   * ✓ Have fun and move fast 🏎
+   *
+   */
   const webhook = request.body;
 
-  // Gopher posts different events to the same URL. Webhook reference: https://docs.gopher.email/v1.0/reference#webhooks
+  // View all webhooks webhook events: https://docs.gopher.email/v1.0/reference#webhooks
   switch (webhook.event) {
     /**
      *
      * TASK CREATED
-     * Handle when a new task is created. Ex: Send a confirmation email,
-     * schedule a followup, etc.
-     * Task reference: https://docs.gopher.email/v1.0/reference#tasks-2
+     * A Gopher Task is created when a Gopher User emails your extension.
+     * It's like a "todo" item with special email-based features.
+     * More about tasks: https://docs.gopher.email/v1.0/reference#tasks]
      *
      */
     case "task.created":
+      /**
+       *
+       * APPLICATION LOGIC GOES HERE
+       * You just got an email command from a user. Now your extension can do something awesome:
+       * File data in a CRM, make a calendar event, add a subscriber, etc.
+       * The incoming webhook body has helpful information to get those
+       * things done (use the Sandbox to reference the webhook's data).
+       * The webhook response tells Gopher what to do next: Save task data,
+       * send an email, etc.
+       * Webhook response reference: https://docs.gopher.email/v1.0/reference#webhook-response
+       * Email command reference: https://docs.gopher.email/v1.0/reference#email-commands
+       *
+       */
       webhookResponse = {
         version: 1,
         task: {
-          // The task.triggered event will now fire in 15 minutes (see below)
+          /**
+           *  Schedule the task to trigger using a natural language syntax (Trigger handling below).
+           *  Scheduling formats: https://docs.gopher.email/v1.0/reference#natural-language-dates
+           */
           trigger_timeformat: "15min"
         },
 
-        // Send a confirmation email.
+        // Send an immediate confirmation email to the user
         send_messages: [
           {
             type: "email",
 
-            // Insert your email 👇 to preview, or just use the Sandbox.
+            // Insert your email 👇 or webhook.source.from to message the "from" address of the sender
             to: "recipient-email@example.com",
             from: "Gopher Express",
             subject: "Task will trigger in 15 minutes",
             body: [
+              /**
+               *
+               * EMAIL UI COMPONENTS
+               * UI component reference: https://docs.gopher.email/v1.0/docs/email-ui-reference
+               * Jumpstart your extension is by copying one of the
+               * example layouts here: https://docs.gopher.email/v1.0/docs/complete-examples
+               *
+               */
+
               {
                 type: "title",
                 text: "Task will trigger in 15 minutes"
@@ -72,6 +146,8 @@ router.post("/", function(request, response) {
                 </a> 
                 for more information.`
               },
+
+              // Required for now. Basically a clearfix
               {
                 type: "section"
               }
@@ -83,26 +159,28 @@ router.post("/", function(request, response) {
       break;
 
     /**
-     *
      *  TASK TRIGGERED
-     *  Handle when a task is triggered. Ex: when a reminder becomes due. You can manually
-     *  trigger tasks in the Sandbox. More about event triggering: TODO: Insert URL
-     *
+     *  Some time later (15 minutes in our case) the Gopher Task is triggered.
+     *  TIP: Use the Sandbox 🏝 to immediately fire trigger events.
      */
     case "task.triggered":
+      /**
+       *  APPLICATION LOGIC GOES HERE
+       *  Pull CRM data, contact information, product pricing, news stories, inspirational content,
+       *  etc. This is the magic moment when your Gopher Extension can save the day by delivering
+       *  exactly the right information at exactly the right time.  Read more about
+       *  perfectly timed emails: https://docs.gopher.email/v1.0/reference#perfect-timing
+       */
+
       webhookResponse = {
         version: 1,
-
-        // Send an email reminder
         send_messages: [
           {
             type: "email",
 
-            // Insert your email 👇 to preview, or just use the Sandbox.
+            // This can also be webhook.reference_email.from
             to: "name@example.com",
             from: "Gopher Express",
-
-            // Tip: render the original subject with: webhook.task.reference_email.subject
             subject: "Here is your reminder",
             body: [
               {
@@ -144,11 +222,17 @@ router.post("/", function(request, response) {
                 </p>
                 `
               },
+
+              /**
+               * ACTION EMAIL
+               * This button performs an email-based action. Clicking it composes a new email with a
+               * pre-populated subject and body. When Gopher receives it, the task.action_received
+               * event is fired. This allows users to get something done without leaving their inbox,
+               * for example, completing a todo, adding a note, even ordering a pizza 🍕 (See below)
+               */
               {
                 type: "button",
                 text: "Postpone 15min",
-
-                // An email-based action https://docs.gopher.email/v1.0/reference#email-based-actions (see below)
                 action: "reschedule.15min",
                 subject: "Reschedule for 15 minutes",
                 body:
@@ -168,21 +252,33 @@ router.post("/", function(request, response) {
     /**
      *
      *  ACTION EMAIL RECEIVED
-     *  Handle when an action email is received.
-     *  Email-Based Actions ref: https://docs.gopher.email/v1.0/reference#email-based-actions
+     *  Handle when an action email is received. The webhook will contain the complete information
+     *  within the email. Your extension can now perform specific actions the user has requested.
+     *  Read more about action emails: https://docs.gopher.email/v1.0/reference#email-based-actions
      *
      */
     case "task.action_received":
+      /**
+       * APPLICATION LOGIC HERE
+       * The user just clicked a button in one of your emails that says something like "complete task",
+       * or "add notes", or "log a call". You can take the contents of their email (use the
+       * Sandbox 🏝 to view the JSON request) and add notes, complete todo items and more, all
+       * from their inbox. In this case, we are simply rescheduling the task.
+       */
       webhookResponse = {
         version: 1,
         task: {
-          // You can also populate this dynamically from the action email with webhook.action.action.split('.')[1]
+          // The action string in your button code can be referenced here. Ex: webhook.action.action.split('.')[1]
           trigger_timeformat: "15min"
         }
       };
       response.send(webhookResponse);
       break;
 
+    /**
+     *  Catch any other webhook responses. Otherwise we'll think your extension is failing and will
+     *  send error messages. For all webhook events, view: https://docs.gopher.email/v1.0/reference#webhooks
+     */
     default:
       response.send({});
       break;
