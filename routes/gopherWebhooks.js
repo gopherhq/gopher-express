@@ -1,31 +1,18 @@
 /**
-
-      ____             _               
-      / ___| ___  _ __ | |__   ___ _ __ 
-    | |  _ / _ \| '_ \| '_ \ / _ | '__|
-    | |_| | (_) | |_) | | | |  __| |   
-      \____|\___/| .__/|_| |_|\___|_|   
-                |_|                    
-
-    Need help? Get in touch!
-    slack: slackin.gopheremail.com
-    email: help+gopher@humans.fut.io
-
-
  * ABOUT THIS FILE:
- * Gopher and your extenion mainly interact with Webhooks, as demonstrated 
+ * Gopher and your extenion mainly interact with Webhooks, as demonstrated
  * in this file.
- * 
+ *
  * To illustrate:
- * 
+ *
  * -> (event) -> Gopher API -> Webhook (JSON) -> Your Extension
- *                                                   | 
+ *                                                   |
  * <- (action) <- Gopher API <- Response (JSON) <- (Custom Logic)
- * 
+ *
  * Examples of events: emails being received, tasks updated, extension installed
  * Examples of custom logic: add to a crm, create todo, make additional API calls to Gopher
  * Examples of actions: send an email, save data, reschedule a task
- * 
+ *
  * More about webhooks: https://docs.gopher.email/v1.0/reference#webhooks
  *
  **/

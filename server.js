@@ -1,3 +1,19 @@
+/**
+      ____             _               
+     / ___| ___  _ __ | |__   ___ _ __ 
+    | |  _ / _ \| '_ \| '_ \ / _ | '__|
+    | |_| | (_) | |_) | | | |  __| |   
+     \____|\___/| .__/|_| |_|\___|_|   
+                |_|                    
+    
+    docs.gopher.email
+
+    Need help? Get in touch!
+    slack: slackin.gopheremail.com
+    email: help+gopher@humans.fut.io
+
+ */
+
 require("dotenv").config();
 const debug = require("debug")("gopher-express");
 const express = require("express");
@@ -25,13 +41,15 @@ app.use("/webhooks", webhooks);
 
 /**
  *
- * Your public HTML page is for a user's first time login, for updating
- * their settings and for any other task that requires a web-ui.
+ * Your index page can be used to welcome the user, updating
+ * settings and any other task that requires a web-ui.
  * Edit public/index.html, public/app.js and public/app.css to customize.
  *
  */
 app.get("/", gopherUtils.requireLogin, (req, res) => {
-  res.render("index");
+  const sandboxUrl =
+    process.env.GOPHER_ADMIN + "sandbox/" + process.env.EXT_ID + "?devtour=1";
+  res.render("index", { sandboxUrl: sandboxUrl });
 });
 
 /**

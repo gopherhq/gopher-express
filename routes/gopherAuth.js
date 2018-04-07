@@ -1,5 +1,5 @@
 /**
- * Handle auth. This should not require customization.
+   Handle auth. This should not require customization.
  */
 
 const debug = require("debug")("gopher-express");
