@@ -1,3 +1,18 @@
+/**
+
+
+    Need help? Get in touch!
+    slack: slackin.gopheremail.com
+    email: help+gopher@humans.fut.io
+
+
+ * ABOUT THIS FILE:
+ * Examples of interacting with the Gopher API
+ * in this file: https://github.com/gopherhq/gopherhq-js
+ *
+ **/
+
+
 require("dotenv").config();
 const debug = require("debug")("gopher-express");
 const express = require("express");
@@ -31,7 +46,9 @@ app.use("/webhooks", webhooks);
  *
  */
 app.get("/", gopherUtils.requireLogin, (req, res) => {
-  res.render("index");
+  const sandboxUrl =
+    process.env.GOPHER_ADMIN + "sandbox/" + process.env.EXT_ID + "?devtour=1";
+  res.render("index", { sandboxUrl: sandboxUrl });
 });
 
 /**

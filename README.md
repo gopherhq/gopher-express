@@ -2,28 +2,21 @@
 
 This is a browser-based development environment created by [Fog Creek](https://www.fogcreek.com/) that contains an editable copy of [Gopher Express](https://github.com/gopherhq/gopher-express).
 
-# One last step
 
-Gopher needs one last setting to complete setup: The base URL.
+### ⏱Getting things ready
+Glitch will take ~30 seconds to set up a dev for your new extension. Open the logs (on the left) to check progress.
 
-To set this:
+Click the "show button" after it goes green.
+    ![Click "show" after it goes green](https://fut-cdn.s3.amazonaws.com/gopher/glitch-green-show-button.png)
 
-1.  Copy the public URL of your Glitch project:
-    ![Copy your Glitch project public URL from the menu in the upper-left](https://fut-cdn.s3.amazonaws.com/gopher/step1-anim.gif)
-
-2.  On your extension page in the Gopher Admin UI, click this link:
-    ![On your Extenion Settings page, click this link](https://fut-cdn.s3.amazonaws.com/gopher/step2.png)
-
-3.  Paste your settings into the Base URL field.
-    ![Paste the value of your Base URL](https://fut-cdn.s3.amazonaws.com/gopher/step3.png) (Gopher identifies you are using the Glitch Quickstart and fills in the other fields automatically)
-
-4.  Click "Save" install your extension and you'll be ready to start building.
 
 # Gopher Express
 
-Welcome to Gopher Express!
+Gopher Express is an open source project for creating Gopher Extensions.
 
-The code is well commented. Most of your work will be in:
+The code is well commented with examples and links to docs throughout.
+
+Most of your work will be in:
 
 * routes/gopherWebhooks – all email interactions happen via these webhooks
 * public/index.html – welcome your users and build useful settings pages here
