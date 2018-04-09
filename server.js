@@ -23,6 +23,7 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const gopherUtils = require("./lib/gopherUtils");
 const gopherAuth = require("./routes/gopherAuth");
+const config = require("./lib/config");
 app.use(cookieParser());
 
 // Keep public/index.html for familiarity
@@ -48,7 +49,7 @@ app.use("/webhooks", webhooks);
  */
 app.get("/", gopherUtils.requireLogin, (req, res) => {
   const sandboxUrl =
-    process.env.GOPHER_ADMIN + "sandbox/" + process.env.EXT_ID + "?devtour=1";
+    config.gopherAdmin + "sandbox/" + config.extensionId + "?devtour=1";
   res.render("index", { sandboxUrl: sandboxUrl });
 });
 

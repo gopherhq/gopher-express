@@ -16,7 +16,7 @@
     <nav class="navbar navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">A Gopher Extension</a>
+                <a class="navbar-brand" href="#">[Your Extension Name]</a>
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -42,51 +42,53 @@
         <!-- End Dialogs -->
 
         <!--  
-        
         Welcome Message
-        Edit this to welcome the user to your extension. jQuery makes the div visible 
-        when ?welcome=1 is in the URL. Remove "hide" to show it all the time.
-
+        Change this to welcome the new user to your extension. 
+        jQuery makes the div visible when ?welcome=1 is in the URL.
         -->
         <div class="jumbotron hide" id="welcome">
-            <h1>🎉Ready For Development</h1>
+            <h1>🎉 Ready For Development.</h1>
             <p>
                 Open the Sandbox to begin.
             </p>
-            <button class="btn btn-primary">
-                <a href="<%= sandboxUrl %>">Open Sandbox</a>
-            </button>
+            <a class="btn btn-primary" href="<%= sandboxUrl %>">Open Sandbox</a>
         </div>
 
-        <section class="row " id="extension-settings">
+
+        <!-- Ok to delete this block. It's just to welcome you, the developer 👋 -->
+        <div class="jumbotron">
+            <h1>Example Extension</h1>
+            <p>
+                You're looking at a fully editable, open source Gopher Extension. Use it as a starting point for your great idea. This is
+                your first time here, start with the Sandbox.
+            </p>
+            <a class="btn btn-default" id="show-settings" onclick="document.querySelector('#extension-settings').className = 'row'; document.querySelector('#welcome').className = 'hide'">Show Example Settings</a>
+            <a class="btn btn-default" href="/?welcome=1">Show Welcome Dialog</a>
+        </div>
+        <!-- End developer welcome dialog -->
+
+        <!--  
+        User Settings Form
+        Each type of form field is shown below. Add extension settings by  
+        copying / pasting the fields below with details. The JS and connectivity
+        to the Gopher API are handled for you. Just copy / paste away ✂
+        -->
+
+        <section class="row hide" id="extension-settings">
             <div class="col-sm-7">
                 <h1>Settings</h1>
                 <p>
-                    Extension settings are are saved in the core Gopher API (already connected), allowing your extension to be wonderfully stateless.
-                    These settings are sent with with every Gopher webhook. You may want to store:
-                    <ul>
-                        <li>OAuth Tokens granting access to external services</li>
-                        <li>Custom followup messages</li>
-                        <li>User logos</li>
-                    </ul>
+                    Copy and paste form field, HTML and text. Fields that have the
+                    <code>gopher-setting</code> class will be saved as
+                    <a href="https://docs.gopher.email/reference#section-extension-data">Extension Data</a>.
                 </p>
 
                 <form class="form-horizontal settings-form hide" method="POST" action="/saveSettings">
 
-                    <!--  
-
-                    User Settings
-                    Each type of form field is shown below. Add extension settings by  
-                    copying / pasting the fields below with details. The JS and connectivity
-                    to the Gopher API are handled for you. Just copy / paste away ✂
-
-                    -->
-
-
                     <!-- Plain Text Input -->
                     <div class="form-group">
                         <label for="inputName" class="control-label">Name</label>
-                        <input type="text" class="fut-setting form-control" id="inputName" placeholder="Name">
+                        <input type="text" class="gopher-setting form-control" id="inputName" placeholder="Name">
                     </div>
                     <!-- End Plain Text Input -->
 
@@ -94,7 +96,7 @@
                     <!-- Another Plain Text Input Example -->
                     <div class="form-group">
                         <label for="inputEmail" class="control-label">Email</label>
-                        <input type="text" class="fut-setting form-control" id="inputEmail" placeholder="Email">
+                        <input type="text" class="gopher-setting form-control" id="inputEmail" placeholder="Email">
                     </div>
                     <!-- End Plain Text Input -->
 
@@ -102,7 +104,7 @@
                     <!-- Text Area -->
                     <div class="form-group">
                         <label for="default_reply">Comment:</label>
-                        <textarea class="fut-setting form-control" rows="5" id="default_reply"></textarea>
+                        <textarea class="gopher-setting form-control" rows="5" id="default_reply"></textarea>
                     </div>
                     <!-- End Text Area -->
 
@@ -111,11 +113,11 @@
                     <div class="form-group">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" id="setting_1" class="fut-setting" value="1">Example Checkbox Setting</label>
+                                <input type="checkbox" id="setting_1" class="gopher-setting" value="1">Example Checkbox Setting</label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" id="setting_2" class="fut-setting" value="2">Another Setting</label>
+                                <input type="checkbox" id="setting_2" class="gopher-setting" value="2">Another Setting</label>
                         </div>
                     </div>
                     <!-- End Checkbox -->
@@ -125,7 +127,7 @@
                     <!-- Password Field  -->
                     <div class="form-group">
                         <label for="secret" lass="control-label ">Password</label>
-                        <input type="password" class="fut-setting form-control" id="secret" placeholder="Password Field">
+                        <input type="password" class="gopher-setting form-control" id="secret" placeholder="Password Field">
                         <span class="help-block">Add a hint like this</span>
                     </div>
                     <!-- End Password Field -->
@@ -133,7 +135,7 @@
                     <!-- Dropdown Select  -->
                     <div class="form-group">
                         <label for="select" class="control-label">City</label>
-                        <select class="fut-setting form-control" id="select">
+                        <select class="gopher-setting form-control" id="select">
                             <option>San Francisco</option>
                             <option>Chicago</option>
                             <option>London</option>
@@ -157,13 +159,14 @@
                 <div class="well">
 
                     <!-- Side-Panel -->
-                    <h3>Helper Text</h3>
-                    <p>You can add some text here to help your users. This is all, of course, totally editable. It's just a
-                        starting point.
+                    <h3>View Source</h3>
+                    <p>
+                        The files are well commented with links to docs throughout.
                     </p>
                     <p>Need help? Join the
                         <br />
-                        <a href="slackin.gopheremail.com">Gopher Slack Channel</a>
+                        <a href="https://slackin.gopheremail.com">Gopher Slack Channel</a> or
+                        <a href="mailto:help+gopher@humans.fut.io">send us an email</a>.
                     </p>
                     <!-- Side-Panel -->
                 </div>
@@ -171,5 +174,4 @@
             </div>
         </section>
     </div>
-
     <% include ./_footer %>

@@ -97,7 +97,7 @@ $(function() {
     .then(function(settings) {
       NProgress.done();
       $(".settings-form").removeClass("hide");
-      populateSettingsForm(".settings-form", ".fut-setting", settings.data);
+      populateSettingsForm(".settings-form", ".gopher-setting", settings.data);
     })
     .catch(function(err) {
       NProgress.done();
@@ -112,7 +112,7 @@ $(function() {
   $(".settings-form").submit(function() {
     debugger;
     NProgress.start();
-    submitSettingsForm(this, ".fut-setting")
+    submitSettingsForm(this, ".gopher-setting")
       .then(function(res) {
         displaySuccess("Settings saved!");
         NProgress.done();
