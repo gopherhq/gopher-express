@@ -1,12 +1,13 @@
 /**
  * ABOUT THIS FILE:
+ *
  * Gopher and your extenion mainly interact with Webhooks, as demonstrated
  * in this file.
  *
  * To illustrate:
  *
  * -> (event) -> Gopher API -> Webhook (JSON) -> Your Extension
- *                                                   |
+ *                                                      |
  * <- (action) <- Gopher API <- Response (JSON) <- (Custom Logic)
  *
  * Examples of events: emails being received, tasks updated, extension installed
@@ -20,7 +21,7 @@
 const express = require("express");
 const router = express.Router();
 const _ = require("lodash");
-const gopherUtils = require("../lib/gopherUtils");
+const gopherUtils = require("../lib/_gopherUtils");
 let webhookResponse = null;
 
 /**
@@ -76,6 +77,7 @@ router.post("/", function(request, response) {
           /**
            *  Schedule the task to trigger using a natural language syntax (Trigger handling below).
            *  Scheduling formats: https://docs.gopher.email/v1.0/reference#natural-language-dates
+           *  Use the user preference instead: webhook.extension.private_data.reminder_interval
            */
           trigger_timeformat: "15min"
         },
@@ -148,6 +150,7 @@ router.post("/", function(request, response) {
     /**
      *  TASK TRIGGERED
      *  Some time later (15 minutes in our case) the Gopher Task is triggered.
+     *  See: https://docs.gopher.email/v1.0/reference#perfect-timing
      *  TIP: Use the Sandbox 🏝 to immediately fire trigger events.
      */
     case "task.triggered":
@@ -172,10 +175,13 @@ router.post("/", function(request, response) {
             body: [
               {
                 type: "title",
-                text: "15 Minutes Later"
+                text: "A Few Minutes Later"
               },
               {
                 type: "html",
+
+                // Instead of a staic followup message, use whatever text the user
+                // specificed in their settings: webhook.extension.private_data.followup_message
                 text: `
                   <p>This exceedingly productive gopher shows up in your inbox, reminding you 
                   <a 

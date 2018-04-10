@@ -21,9 +21,9 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
-const gopherUtils = require("./lib/gopherUtils");
-const gopherAuth = require("./routes/gopherAuth");
-const config = require("./lib/config");
+const gopherUtils = require("./lib/_gopherUtils");
+const gopherAuth = require("./routes/_gopherAuth");
+const config = require("./lib/_config");
 app.use(cookieParser());
 
 // Keep public/index.html for familiarity
@@ -50,7 +50,9 @@ app.use("/webhooks", webhooks);
 app.get("/", gopherUtils.requireLogin, (req, res) => {
   const sandboxUrl =
     config.gopherAdmin + "sandbox/" + config.extensionId + "?devtour=1";
-  res.render("index", { sandboxUrl: sandboxUrl });
+  const testEmail = "test@" + process.env.EXT_SUBDOMAIN + ".gopher.email";
+
+  res.render("index", { sandboxUrl: sandboxUrl, testEmail: testEmail });
 });
 
 /**

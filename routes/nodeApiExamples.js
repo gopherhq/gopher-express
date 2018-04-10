@@ -6,7 +6,7 @@
 const express = require("express");
 const router = express.Router();
 const request = require("request");
-const config = require("../lib/config");
+const config = require("../lib/_config");
 let gopherClient = "";
 
 // Get the authenticated API client, set up in ../lib/gopherUtils.js requireLogin()

@@ -1,42 +1,37 @@
-# Welcome to Glitch
+## Click the "show" button after it turns green
 
-This is a browser-based development environment created by [Fog Creek](https://www.fogcreek.com/) that contains an editable copy of [Gopher Express](https://github.com/gopherhq/gopher-express), our open source starter extension.
+This will connect your extension with Gopher so the two systems can talk.
 
-### ⏱ Getting things ready
-
-Glitch will take ~30 seconds to set up a dev for your new extension. Open the logs (on the left) to check progress.
-
-**Click the "show" button after it goes green.**
 ![Click the "show" btton in the top left after it goes green](https://fut-cdn.s3.amazonaws.com/gopher/glitch-green-show-button.png)
+
+... ⏱ it should only take [Glitch](http://glitch.com/) a miinute to create your editable copy of our open source starter extension. While you're waiting, read on.
 
 # Gopher Express
 
-Gopher Express is an open source Gopher Extension to jumpstart your next [great idea](trello.com/b/AhYnpKqa/gopher-extension-ideas).
+Gopher Express is an open source Gopher Extension to kickstart your next great idea. Need inspiration? Visit the [Gopher Extension Idea Board](https://trello.com/b/AhYnpKqa/gopher-extension-ideas).
 
-The code is well commented with examples and links to docs throughout.
+## What does it do?
 
-Most of your work will be in:
+Out of the box, it's a simple email reminder.
 
-* `routes/gopherWebhooks` – all email interactions happen via these webhooks
-* `public/index.html` – welcome your users and build useful settings pages here
-* `public/app.js` – connect to other services and save your tokens in the Gopher Core API using the methods shown here.
+If you send an email to [anything]@[your-extension-domain].gopher.email, you will receive en email reminder in 15 minutes.
+]
 
-Note: If you did not arrive here from the Gopher Admin UI, [start by setting up a new extension](https://www.gopheremail.com/developer/create).
+## How does it work?
 
-## Architecture
+* When a user emails [anything]@[your-extension].gopher.email, Gopher fires the `task.created` webhook to your extension, which is handled in `routes/gopherWebhooks`.
 
-Gopher interacts with your extension primarily via webhooks. When an event happens in Gopher
-(ex: an email is received), it sends a webhook (HTTP POST) to the extension. The extension
-responds to the webhook with JSON that tells Gopher what to do. [More About Architecture](https://docs.gopher.email/v1.0/reference#architecture)
+* When a reminder becomes due, Gopher fires the `task.triggered` webhook, again handled in `routes/gopherWebhooks.js`
 
-The extension also handles the OAuth login process and provides a page to let the user
-manage their extension settings (see `public/index.html`).
+* User settings and the OAuth connection process are handled in `public/index.html`.
 
-Read the Gopher [API Docs](https://docs.gopher.email) to learn about the Gopher platform. Also, [join us in Slack](http://slackin.gopheremail.com/) or [send us an email](help+gopher@humans.fut.io) with any questions.
+The code is well commented with examples and links to docs throughout, so have a look around.
 
 ## Exporting / Local Development
 
-Gopher Express uses Node.js and Express. To run your extension locally:
+Gopher Express just uses Node.js and Express, making it very portable.
+
+To run your extension locally:
 
 * export to Github or Download (in Glitch's advanced settings)
 * run `npm install`, then `npm run dev`
@@ -45,6 +40,14 @@ Gopher Express uses Node.js and Express. To run your extension locally:
 * copy `.env.example` into `.env` and add your environment details
 * edit your extension's settings on gopher.email to reflect your new environment.
 
-## Deploying
+From here you can easily deploy your extension to [Heroku](https://www.heroku.com/), [Zeit](https://zeit.co/now) or any other Node.js platform.
 
-Most instances of Gopher Express will start on Glitch. Once your extension is ready for deployment you can easily export your extension (above) and host it on any Node.js platform, for example [Heroku](https://www.heroku.com/) or [Zeit](https://zeit.co/now).
+## Contributing
+
+Create issues, provide feedback or issue PRs on the [Gopher Express Github Repo](https://github.com/gopherhq/gopher-express)
+
+## Help
+
+* If you did not arrive here from the Gopher Admin UI, [start by setting up a new extension](https://www.gopheremail.com/developer/create).
+* Read the Gopher [API Docs](https://docs.gopher.email) to learn about the Gopher platform.
+* [Join us in Slack](http://slackin.gopheremail.com/) or [send us an email](help+gopher@humans.fut.io) with feedback!

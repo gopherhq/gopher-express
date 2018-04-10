@@ -46,65 +46,68 @@
         Change this to welcome the new user to your extension. 
         jQuery makes the div visible when ?welcome=1 is in the URL.
         -->
-        <div class="jumbotron hide" id="welcome">
-            <h1>🎉 Ready For Development.</h1>
+        <div class="jumbotron" id="welcome">
+            <h1>Extension Installed 🎉</h1>
             <p>
-                Open the Sandbox to begin.
+                Your extension email is live (for only your Gopher account). Try sending an email to
+                <strong>
+                    <a href="mailto:<%= testEmail %>">
+                        <%= testEmail %>
+                    </a>
+                </strong>, then go to the Sandbox to see what is happening.
             </p>
-            <a class="btn btn-primary" href="<%= sandboxUrl %>">Open Sandbox</a>
+            <a class="btn btn-primary btn-lg" target="_blank" href="<%= sandboxUrl %>">Open Sandbox</a>
+        </div>
+        <div class="text-muted text-right">
+            In addition to welcoming new users, this index page can also be used for
+            <a style="color: grey; text-decoration: underline" id="show-settings" onclick="document.querySelector('#extension-settings').className = 'row'; document.querySelector('#welcome').className = 'hide'">general information and user settings</a>.
         </div>
 
 
-        <!-- Ok to delete this block. It's just to welcome you, the developer 👋 -->
-        <div class="jumbotron">
-            <h1>Example Extension</h1>
-            <p>
-                You're looking at a fully editable, open source Gopher Extension. Use it as a starting point for your great idea. This is
-                your first time here, start with the Sandbox.
-            </p>
-            <a class="btn btn-default" id="show-settings" onclick="document.querySelector('#extension-settings').className = 'row'; document.querySelector('#welcome').className = 'hide'">Show Example Settings</a>
-            <a class="btn btn-default" href="/?welcome=1">Show Welcome Dialog</a>
-        </div>
-        <!-- End developer welcome dialog -->
-
-        <!--  
-        User Settings Form
-        Each type of form field is shown below. Add extension settings by  
-        copying / pasting the fields below with details. The JS and connectivity
-        to the Gopher API are handled for you. Just copy / paste away ✂
-        -->
 
         <section class="row hide" id="extension-settings">
+
+            <div class="jumbotron">
+                <h1>Simple Reminder</h1>
+                <p>
+                    This open source extension schedules email reminders.
+                </p>
+                <p>Send an email to
+                    <strong>
+                        <a href="mailto:<%= testEmail %>">
+                            <%= testEmail %>
+                        </a>
+                    </strong> to get started.</p>
+                <a href="/?welcome=1">Back to Welcome Dialog</a>
+            </div>
+
+
+
+            <!--  
+          User Settings Form
+          Each type of form field is shown below. Add extension settings by  
+          copying / pasting the fields below with details. The JS and connectivity
+          to the Gopher API are handled for you. Just copy / paste away ✂ 
+          See also /settings.md
+          -->
+
             <div class="col-sm-7">
                 <h1>Settings</h1>
-                <p>
-                    Copy and paste form field, HTML and text. Fields that have the
-                    <code>gopher-setting</code> class will be saved as
-                    <a href="https://docs.gopher.email/reference#section-extension-data">Extension Data</a>.
-                </p>
 
                 <form class="form-horizontal settings-form hide" method="POST" action="/saveSettings">
 
                     <!-- Plain Text Input -->
                     <div class="form-group">
-                        <label for="inputName" class="control-label">Name</label>
-                        <input type="text" class="gopher-setting form-control" id="inputName" placeholder="Name">
+                        <label for="reminder_interval" class="control-label">Reminder Interval</label>
+                        <input type="text" class="gopher-setting form-control" id="reminder_interval" placeholder="Reminder interval (ex: 15minutes)">
+                        <span class="help-block">When would you like the reminder scheduled?</span>
                     </div>
                     <!-- End Plain Text Input -->
-
-
-                    <!-- Another Plain Text Input Example -->
-                    <div class="form-group">
-                        <label for="inputEmail" class="control-label">Email</label>
-                        <input type="text" class="gopher-setting form-control" id="inputEmail" placeholder="Email">
-                    </div>
-                    <!-- End Plain Text Input -->
-
 
                     <!-- Text Area -->
                     <div class="form-group">
-                        <label for="default_reply">Comment:</label>
-                        <textarea class="gopher-setting form-control" rows="5" id="default_reply"></textarea>
+                        <label for="followup_message">Followup Message:</label>
+                        <textarea class="gopher-setting form-control" rows="5" id="followup_message" placeholder="Hi, here is your reminder"></textarea>
                     </div>
                     <!-- End Text Area -->
 
@@ -113,33 +116,23 @@
                     <div class="form-group">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" id="setting_1" class="gopher-setting" value="1">Example Checkbox Setting</label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" id="setting_2" class="gopher-setting" value="2">Another Setting</label>
+                                <input type="checkbox" id="setting_1" class="gopher-setting" value="1">Include Followup Links</label>
                         </div>
                     </div>
                     <!-- End Checkbox -->
 
                     <br />
                     <br />
-                    <!-- Password Field  -->
-                    <div class="form-group">
-                        <label for="secret" lass="control-label ">Password</label>
-                        <input type="password" class="gopher-setting form-control" id="secret" placeholder="Password Field">
-                        <span class="help-block">Add a hint like this</span>
-                    </div>
-                    <!-- End Password Field -->
 
                     <!-- Dropdown Select  -->
                     <div class="form-group">
-                        <label for="select" class="control-label">City</label>
-                        <select class="gopher-setting form-control" id="select">
-                            <option>San Francisco</option>
-                            <option>Chicago</option>
-                            <option>London</option>
-                            <option>New York</option>
+                        <label for="select" class="control-label">Salutation</label>
+                        <select class="gopher-setting form-control" id="salutation">
+                            <option>Hello!</option>
+                            <option>Hi there,</option>
+                            <option>Hi</option>
+                            <option>Yo</option>
+                            <option>Yo!</option>
                         </select>
                     </div>
                     <!-- End Dropdown Select -->
@@ -163,6 +156,12 @@
                     <p>
                         The files are well commented with links to docs throughout.
                     </p>
+                    <p>
+                        Settings form fields that have the
+                        <code>gopher-setting</code> class will be saved as
+                        <a href="https://docs.gopher.email/reference#section-extension-data">Extension Data</a>.
+                    </p>
+
                     <p>Need help? Join the
                         <br />
                         <a href="https://slackin.gopheremail.com">Gopher Slack Channel</a> or
