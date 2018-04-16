@@ -30,3 +30,25 @@ $(function() {
 
   // Add custom JS handlers here.
 });
+
+
+(function loadExtensionData() {
+  
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://api.gopher.email/api/v1/extensions/1489",
+  "method": "GET",
+  "headers": {
+    "Content-Type": "application/json",
+    // "Authorization": "Bearer " + Cookies.get('gopherToken'),
+    "Cache-Control": "no-cache",
+    "Postman-Token": "1f36136e-389b-4f99-92da-70d5ca06e067"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+
+})();

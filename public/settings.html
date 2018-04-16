@@ -1,0 +1,111 @@
+<% include ./_header %>
+
+        <section class="row" id="extension-settings">
+
+            <div class="jumbotron hide">
+                <h1>Simple Reminder</h1>
+                <p>
+                    This open source extension schedules email reminders.
+                </p>
+                <p>Send an email to
+                    <strong>
+                        <a href="mailto:<%= testEmail %>">
+                            <%= testEmail %>
+                        </a>
+                    </strong> to get started.</p>
+                <a href="/?welcome=1">Back to Welcome Dialog</a>
+            </div>
+
+
+
+            <!--  
+          User Settings Form
+          Each type of form field is shown below. Add extension settings by  
+          copying / pasting the fields below with details. The JS and connectivity
+          to the Gopher API are handled for you. Just copy / paste away ✂ 
+          See also /settings.md
+          -->
+
+            <div class="col-sm-7">
+                <h1>Settings</h1>
+
+                <form class="form-horizontal settings-form " method="POST" action="/saveSettings">
+
+                    <!-- Plain Text Input -->
+                    <div class="form-group">
+                        <label for="reminder_interval" class="control-label">Reminder Interval</label>
+                        <input type="text" class="gopher-setting form-control" id="reminder_interval" placeholder="Reminder interval (ex: 15minutes)">
+                        <span class="help-block">When would you like the reminder scheduled?</span>
+                    </div>
+                    <!-- End Plain Text Input -->
+
+                    <!-- Text Area -->
+                    <div class="form-group">
+                        <label for="followup_message">Followup Message:</label>
+                        <textarea class="gopher-setting form-control" rows="5" id="followup_message" placeholder="Hi, here is your reminder"></textarea>
+                    </div>
+                    <!-- End Text Area -->
+
+
+                    <!-- Checkbox -->
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="setting_1" class="gopher-setting" value="1">Include Followup Links</label>
+                        </div>
+                    </div>
+                    <!-- End Checkbox -->
+
+                    <br />
+                    <br />
+
+                    <!-- Dropdown Select  -->
+                    <div class="form-group">
+                        <label for="select" class="control-label">Salutation</label>
+                        <select class="gopher-setting form-control" id="salutation">
+                            <option>Hello!</option>
+                            <option>Hi there,</option>
+                            <option>Hi</option>
+                            <option>Yo</option>
+                            <option>Yo!</option>
+                        </select>
+                    </div>
+                    <!-- End Dropdown Select -->
+
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="save_settings">Submit</button>
+                        <!-- <span class="help-block hide"><i class="glyphicon glyphicon-ok"></i> Settings Saved </span> -->
+                    </div>
+                </form>
+
+                <!-- End Settings Form -->
+
+            </div>
+
+            <div class="col-sm-5">
+                <div class="well">
+
+                    <!-- Side-Panel -->
+                    <h3>View Source</h3>
+                    <p>
+                        The files are well commented with links to docs throughout.
+                    </p>
+                    <p>
+                        Settings form fields that have the
+                        <code>gopher-setting</code> class will be saved as
+                        <a href="https://docs.gopher.email/reference#section-extension-data">Extension Data</a>.
+                    </p>
+
+                    <p>Need help? Join the
+                        <br />
+                        <a href="https://slackin.gopheremail.com">Gopher Slack Channel</a> or
+                        <a href="mailto:help+gopher@humans.fut.io">send us an email</a>.
+                    </p>
+                    <!-- Side-Panel -->
+                </div>
+
+            </div>
+        </section>
+  
+  <% include ./_footer %>

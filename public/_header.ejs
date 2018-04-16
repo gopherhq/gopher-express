@@ -9,3 +9,36 @@
 </head>
 
 <body>
+  
+      <!--  Nav  -->
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">[Your Extension Name]</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/settings">
+                        Extension Settings</a>
+                </li>
+                <li>
+                    <a id="logout" href="#">
+                        <span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <div class="container" id="content">
+
+        <!-- Dialogs -->
+        <div class="alert alert-dismissible alert-warning hide" id="error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+
+        <div class="alert alert-dismissible alert-success hide" id="success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+        <!-- End Dialogs -->

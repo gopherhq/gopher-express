@@ -42,18 +42,25 @@ app.use("/webhooks", webhooks);
 
 /**
  *
- * Your index page can be used to welcome the user, updating
+ * These pages can be used to welcome the user, updating
  * settings and any other task that requires a web-ui.
- * Edit public/index.html, public/app.js and public/app.css to customize.
+ * Edit public/index.html, public/settings.html, public/app.js and public/app.css to customize.
  *
  */
-app.get("/", gopherUtils.requireLogin, (req, res) => {
-  const sandboxUrl =
-    config.gopherAdmin + "sandbox/" + config.extensionId + "?devtour=1";
-  const testEmail = "test@" + process.env.EXT_SUBDOMAIN + ".gopher.email";
+const templateVars = {
+  sandboxUrl: config.gopherAdmin + "sandbox/" + config.extensionId + "?devtour=1",
+  testEmail: "test@" + process.env.EXT_SUBDOMAIN + ".gopher.email",
+  extDomain: process.env.EXT_SUBDOMAIN + ".gopher.email"
+} 
 
-  res.render("index", { sandboxUrl: sandboxUrl, testEmail: testEmail });
+app.get("/", gopherUtils.requireLogin, (req, res) => {
+  res.render("index", templateVars);
 });
+
+app.get("/settings", gopherUtils.requireLogin, (req, res) => {
+  res.render("settings", templateVars);
+});
+
 
 /**
  *
@@ -61,7 +68,7 @@ app.get("/", gopherUtils.requireLogin, (req, res) => {
  * View more API methods https://github.com/gopherhq/gopherhq-js
  *
  */
-const exampleRoutes = require("./routes/nodeApiExamples");
+const exampleRoutes = require("./routes/gopherApi");
 app.use(exampleRoutes);
 
 app.use("/auth", gopherAuth);

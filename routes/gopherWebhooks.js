@@ -23,6 +23,9 @@ const router = express.Router();
 const _ = require("lodash");
 const gopherUtils = require("../lib/_gopherUtils");
 let webhookResponse = null;
+const gopherSalesforce = require('./gopherSalesforce');
+const gopherGithub = require('./gopherGithub');
+const gopherProducthunt = require('./gopherProducthunt');
 
 /**
  * Validates your webhook and authenticates the Gopher REST API Client, allowing you
@@ -47,106 +50,137 @@ router.post("/", function(request, response) {
    */
   const webhook = request.body;
 
+
   // View all webhooks webhook events: https://docs.gopher.email/v1.0/reference#webhooks
-  switch (webhook.event) {
+  switch(webhook.event) {
+      
+
+    case "task.created": 
     /**
      *
-     * TASK CREATED
-     * A Gopher Task is created when a Gopher User emails your extension.
-     * It's like a "todo" item with special email-based features.
-     * More about tasks: https://docs.gopher.email/v1.0/reference#tasks]
+     * APPLICATION LOGIC GOES HERE
+     * You just got an email command from a user which created a Gopher Task.
+     * (A "task" like a "todo" item with special email-based features.
+     * More about tasks: https://docs.gopher.email/v1.0/reference#tasks)
+     * 
+     * Now your extension can do something awesome:
+     * File data in a CRM, make a calendar event, add a subscriber, etc.
+     * The incoming webhook body has helpful information to get those
+     * things done (use the Sandbox to reference the webhook's data).
+     * The webhook response tells Gopher what to do next: Save task data,
+     * send an email, etc.
+     * Webhook response reference: https://docs.gopher.email/v1.0/reference#webhook-response
+     * Email command reference: https://docs.gopher.email/v1.0/reference#email-commands
      *
      */
-    case "task.created":
-      /**
-       *
-       * APPLICATION LOGIC GOES HERE
-       * You just got an email command from a user. Now your extension can do something awesome:
-       * File data in a CRM, make a calendar event, add a subscriber, etc.
-       * The incoming webhook body has helpful information to get those
-       * things done (use the Sandbox to reference the webhook's data).
-       * The webhook response tells Gopher what to do next: Save task data,
-       * send an email, etc.
-       * Webhook response reference: https://docs.gopher.email/v1.0/reference#webhook-response
-       * Email command reference: https://docs.gopher.email/v1.0/reference#email-commands
-       *
-       */
-      webhookResponse = {
-        version: 1,
-        task: {
-          /**
-           *  Schedule the task to trigger using a natural language syntax (Trigger handling below).
-           *  Scheduling formats: https://docs.gopher.email/v1.0/reference#natural-language-dates
-           *  Use the user preference instead: webhook.extension.private_data.reminder_interval
-           */
-          trigger_timeformat: "15min"
-        },
 
-        // Send an immediate confirmation email to the user
-        send_messages: [
-          {
-            type: "email",
+      
+      // Ex salesforce@your-ext.gopher.email
+      switch(webhook.command.params[0]) {
+        case "salesforce":
+          return response.send(gopherSalesforce.handleDemo(webhook));
+        break;
+        
+        // Ex github@your-ext.gopher.email
+        case "github":
+          return response.send(gopherGithub.handleDemo(webhook));
+        break;
+        
+        // producthunt@your-ext.gopher.email
+        case "producthunt":
+          return response.send(gopherProducthunt.handleDemo(webhook));
+        break;
+        
+        // Set a simple email reminder by default Ex: [anything]@your-ext.gopher.email 
+        default:
+        
+        const webhookResponse = {
+          version: 1,
+          task: {
+            /**
+             *  Schedule the task to trigger using a natural language syntax (Trigger handling below).
+             *  Scheduling formats: https://docs.gopher.email/v1.0/reference#natural-language-dates
+             *  Use the user preference instead: webhook.extension.private_data.reminder_interval
+             */
+            trigger_timeformat: "1min"
+          },
 
-            // Insert your email 👇 or webhook.source.from to message the "from" address of the sender
-            to: "recipient-email@example.com",
-            from: "Gopher Express",
-            subject: "Task will trigger in 15 minutes",
-            body: [
-              /**
-               *
-               * EMAIL UI COMPONENTS
-               * UI component reference: https://docs.gopher.email/v1.0/docs/email-ui-reference
-               * Jumpstart your extension is by copying one of the
-               * example layouts here: https://docs.gopher.email/v1.0/docs/complete-examples
-               *
-               */
+          // Send an immediate confirmation email to the user
+          send_messages: [
+            {
+              type: "email",
+              to: webhook.source.from, // Sent to whoever sent the email
+              from: "Gopher Express",
+              subject: "Task will trigger in 15 minutes",
+              body: [
+                /**
+                 *
+                 * EMAIL UI COMPONENTS
+                 * UI component reference: https://docs.gopher.email/v1.0/docs/email-ui-reference
+                 * Jumpstart your extension is by copying one of the
+                 * example layouts here: https://docs.gopher.email/v1.0/docs/complete-examples
+                 *
+                 */
 
-              {
-                type: "title",
-                text: "Task will trigger in 15 minutes"
-              },
-              {
-                type: "section",
-                text: "WHAT HAPPENS NEXT?"
-              },
-              {
-                type: "html",
-                text: `
-                <p>When this task triggers, Gopher will fire the 
-                <strong>task.triggered</strong> webhook. You can either wait 15 minutes 
-                for this to happen (boring), or use the Sandbox to trigger it right away 
-                (awesome!). Open the log message for this task, then click the 
-                lightning bolt ⚡️.</p>
-                `
-              },
-              {
-                type: "section",
-                text: "CUSTOMIZE"
-              },
-              {
-                type: "html",
-                text: `Add custom HTML, buttons, sections or titles. See
-                <a 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://docs.gopher.email/v1.0/reference#email-ui-components"
-                >
-                Gopher UI Components
-                </a> 
-                for more information.`
-              },
+                {
+                  type: "title",
+                  text: "Task will trigger in 15 minutes"
+                },
+                {
+                  type: "section",
+                  text: "WHAT HAPPENS NEXT?"
+                },
+                {
+                  type: "html",
+                  text: `
+                  <p>When this task triggers, Gopher will fire the 
+                  <strong>task.triggered</strong> webhook. You can either wait 15 minutes 
+                  for this to happen (boring), or use the Sandbox to trigger it right away 
+                  (awesome!). Open the log message for this task, then click the 
+                  lightning bolt ⚡️.</p>
+                  `
+                },
+                {
+                  type: "section",
+                  text: "CUSTOMIZE"
+                },
+                {
+                  type: "html",
+                  text: `Add custom HTML, buttons, sections or titles. See
+                  <a 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://docs.gopher.email/v1.0/reference#email-ui-components"
+                  >
+                  Gopher UI Components
+                  </a> 
+                  for more information.`
+                },
 
-              // Required for now. Basically a clearfix
-              {
-                type: "section"
-              }
-            ]
-          }
-        ]
-      };
-      response.send(webhookResponse);
+                // Required for now. Basically a clearfix
+                {
+                  type: "section"
+                }
+              ]
+            }
+          ]
+        };
+        response.send(webhookResponse);
       break;
+      }
 
+      
+
+      
+  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+      Events from here down are only implemented for 
+      the simple email reminder event. 
+
+
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
+      
     /**
      *  TASK TRIGGERED
      *  Some time later (15 minutes in our case) the Gopher Task is triggered.
