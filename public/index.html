@@ -1,187 +1,102 @@
 <% include ./_header %>
 
-    <!--  
-
-     ____             _               
-      / ___| ___  _ __ | |__   ___ _ __ 
-    | |  _ / _ \| '_ \| '_ \ / _ | '__|
-    | |_| | (_) | |_) | | | |  __| |   
-      \____|\___/| .__/|_| |_|\___|_|   
-                |_|                    
-
-    Need help? Get in touch!
-    slack: slackin.gopheremail.com
-    email: help+gopher@humans.fut.io
-
-
-    Customize This Page
-    - The sections you are likely to edit have been clearly commented with instructions.
-    - This template uses Bootstrap Flatly with minimal customization, allowing you to 
-        make use of the various Bootstrap UI components.
-    - This is an early release. The starter kit may evolve. Feedback is welcome!
-  
-    -->
-
-
-
-    <!--  Nav  -->
-    <nav class="navbar navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">A Gopher Extension</a>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a id="logout" href="#">
-                        <span class="glyphicon glyphicon-log-out"></span> Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-
-
-    <div class="container" id="content">
-
-        <!-- Dialogs -->
-        <div class="alert alert-dismissible alert-warning hide" id="error">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>
-
-        <div class="alert alert-dismissible alert-success hide" id="success">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>
-        <!-- End Dialogs -->
-
         <!--  
-        
         Welcome Message
-        Edit this to welcome the user to your extension. jQuery makes the div visible 
-        when ?welcome=1 is in the URL. Remove "hide" to show it all the time.
-
+        Change this to welcome the new user to your extension. 
+        jQuery makes the div visible when ?welcome=1 is in the URL.
         -->
-       <div class="jumbotron hide" id="welcome">
-            <h1>🎉Ready For Development</h1>
+        <div class="jumbotron hide" id="welcome1">
+            <h1>Extension Installed 🎉</h1>
             <p>
-                Open the Sandbox to begin.
+                Your extension email is live (for only your Gopher account). Try sending an email to
+                <strong>
+                    <a href="mailto:<%= testEmail %>">
+                        <%= testEmail %>
+                    </a>
+                </strong>, then go to the Sandbox to see what is happening.
             </p>
-            <button class="btn btn-primary">
-                <a href="<%= sandboxUrl %>">Open Sandbox</a>
-            </button>
+            <a class="btn btn-primary btn-lg" target="_blank" href="<%= sandboxUrl %>">Open Sandbox</a>
         </div>
+<!--         <div class="text-muted text-right">
+            In addition to welcoming new users, this index page can also be used for
+            <a style="color: grey; text-decoration: underline" id="show-settings" onclick="document.querySelector('#extension-settings').className = 'row'; document.querySelector('#welcome').className = 'hide'">general information and user settings</a>.
+        </div> -->
+  
+        <section class="row">
+          <div class="col-sm-7">
+          <h1>
+            Scenarios
+          </h1>
+          <p class="lead">
+            Try one of these scenarios as a starting point for your next extension. See what's happening
+            in <a target="_blank" href="<%= sandboxUrl %>">your extension's Sandbox</a>.
+          </p>
 
-        <section class="row " id="extension-settings">
-            <div class="col-sm-7">
-                <h1>Settings</h1>
-                <p>
-                    Extension settings are are saved in the core Gopher API (already connected), allowing your extension to be wonderfully stateless.
-                    These settings are sent with with every Gopher webhook. You may want to store:
-                    <ul>
-                        <li>OAuth Tokens granting access to external services</li>
-                        <li>Custom followup messages</li>
-                        <li>User logos</li>
-                    </ul>
-                </p>
+          <div class="jumbotron">
+            <h3>Email-Based CRM 📈</h3>
+            <p>
+              Schedule followups, create notes and log calls without leaving email.
+            </p>
+            <a href="mailto:salesforce@<%= extDomain %>" class="btn btn-primary">salesforce@<%= extDomain %> </a>
+          </div>
 
-                <form class="form-horizontal settings-form hide" method="POST" action="/saveSettings">
+          <div class="jumbotron">
+            <h3>Your Email ❤️ Your Todo List</h3>
+            <p>
+              Many todo lists can accept forwarded email. Gopher can can help you
+              actually get things done without leaving email.
+            </p>
+            <a href="" class="btn btn-primary disabled">todo@demo.gopher.email</a>
+          </div>
 
-                    <!--  
+          <div class="jumbotron">
+            <h3>Github Ticket <img height="25px" src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png"></h3>
+            <p>
+              A Github ticket was just created. Gopher can help you handle it without leaving your inbox. 
+            </p>
+            <a href="mailto:github@<%= extDomain %>" class="btn btn-primary">Email github@<%= extDomain %></a>
+              (Sending to this email simulates when Github posts a webhook to your extension)
+          </div>
 
-                    User Settings
-                    Each type of form field is shown below. Add extension settings by  
-                    copying / pasting the fields below with details. The JS and connectivity
-                    to the Gopher API are handled for you. Just copy / paste away ✂
-
-                    -->
-
-
-                    <!-- Plain Text Input -->
-                    <div class="form-group">
-                        <label for="inputName" class="control-label">Name</label>
-                        <input type="text" class="fut-setting form-control" id="inputName" placeholder="Name">
-                    </div>
-                    <!-- End Plain Text Input -->
-
-
-                    <!-- Another Plain Text Input Example -->
-                    <div class="form-group">
-                        <label for="inputEmail" class="control-label">Email</label>
-                        <input type="text" class="fut-setting form-control" id="inputEmail" placeholder="Email">
-                    </div>
-                    <!-- End Plain Text Input -->
-
-
-                    <!-- Text Area -->
-                    <div class="form-group">
-                        <label for="default_reply">Comment:</label>
-                        <textarea class="fut-setting form-control" rows="5" id="default_reply"></textarea>
-                    </div>
-                    <!-- End Text Area -->
-
-
-                    <!-- Checkbox -->
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" id="setting_1" class="fut-setting" value="1">Example Checkbox Setting</label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" id="setting_2" class="fut-setting" value="2">Another Setting</label>
-                        </div>
-                    </div>
-                    <!-- End Checkbox -->
-
-                    <br />
-                    <br />
-                    <!-- Password Field  -->
-                    <div class="form-group">
-                        <label for="secret" lass="control-label ">Password</label>
-                        <input type="password" class="fut-setting form-control" id="secret" placeholder="Password Field">
-                        <span class="help-block">Add a hint like this</span>
-                    </div>
-                    <!-- End Password Field -->
-
-                    <!-- Dropdown Select  -->
-                    <div class="form-group">
-                        <label for="select" class="control-label">City</label>
-                        <select class="fut-setting form-control" id="select">
-                            <option>San Francisco</option>
-                            <option>Chicago</option>
-                            <option>London</option>
-                            <option>New York</option>
-                        </select>
-                    </div>
-                    <!-- End Dropdown Select -->
+            
+          <div class="jumbotron">
+            <h3>Daily News 🌦</h3>
+            <p>
+              Get an interactive newsletter daily.
+            </p>
+            <a href="mailto:producthunt@<%= extDomain %>" class="btn btn-primary">producthunt@<%= extDomain %></a>
+          </div>
+      </div>
+        <div class="col-sm-3 col-sm-offset-1 text-right" style="margin-top: 200px;">
+          <h3>
+            Helpful Resources 
+          </h3>
+          <p>
+            <a href="<%= sandboxUrl %>">Extension Sandbox</a><br />
+            Build your extension here
+          </p>
+          <p>
+            <a href="https://docs.gopher.email/reference#components">Components of Gopher</a><br />
+            High-level overview
+          </p>
+          <p>
+            <a href="https://docs.gopher.email/reference#components">Guide: Building Your First Extension</a><br />
+            Let us walk you through
+          </p>
+          <p>
+            <a href="https://docs.gopher.email/reference#components">API Docs</a><br />
+            Detailed Docs
+          </p>
+          <p>
+            <a href="https://docs.gopher.email/reference#components">Slack Channel</a><br />
+            Detailed Docs
+          </p>
+        </div>
+  </section>
+  
 
 
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary" id="save_settings">Submit</button>
-                        <!-- <span class="help-block hide"><i class="glyphicon glyphicon-ok"></i> Settings Saved </span> -->
-                    </div>
-                </form>
 
-                <!-- End Settings Form -->
 
-            </div>
-
-            <div class="col-sm-5">
-                <div class="well">
-
-                    <!-- Side-Panel -->
-                    <h3>Helper Text</h3>
-                    <p>You can add some text here to help your users. This is all, of course, totally editable. It's just a
-                        starting point.
-                    </p>
-                    <p>Need help? Join the
-                        <br />
-                        <a href="slackin.gopheremail.com">Gopher Slack Channel</a>
-                    </p>
-                    <!-- Side-Panel -->
-                </div>
-
-            </div>
-        </section>
-    </div>
-
+    
     <% include ./_footer %>

@@ -2,10 +2,43 @@
 <html lang="en">
 
 <head>
-    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-+ENW/yibaokMnme+vBLnHMphUYxHs34h9lpdbSLuAwGkOKFRl4C34WkjazBtb7eT"
-        crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
     <link rel="stylesheet" type="text/css" href="./app.css">
 </head>
 
 <body>
+  
+      <!--  Nav  -->
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">[Your Extension Name]</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/settings">
+                        Extension Settings</a>
+                </li>
+                <li>
+                    <a id="logout" href="#">
+                        <span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <div class="container" id="content">
+
+        <!-- Dialogs -->
+        <div class="alert alert-dismissible alert-warning hide" id="error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+
+        <div class="alert alert-dismissible alert-success hide" id="success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+        <!-- End Dialogs -->

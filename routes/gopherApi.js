@@ -1,27 +1,12 @@
 /**
-
-      ____             _               
-      / ___| ___  _ __ | |__   ___ _ __ 
-    | |  _ / _ \| '_ \| '_ \ / _ | '__|
-    | |_| | (_) | |_) | | | |  __| |   
-      \____|\___/| .__/|_| |_|\___|_|   
-                |_|                    
-
-    Need help? Get in touch!
-    slack: slackin.gopheremail.com
-    email: help+gopher@humans.fut.io
-
-
- * ABOUT THIS FILE:
  * Examples of interacting with the Gopher API
  * in this file: https://github.com/gopherhq/gopherhq-js
- *
  **/
 
 const express = require("express");
 const router = express.Router();
 const request = require("request");
-const config = require("../lib/config");
+const config = require("../lib/_config");
 let gopherClient = "";
 
 // Get the authenticated API client, set up in ../lib/gopherUtils.js requireLogin()
